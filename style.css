@@ -1,0 +1,12 @@
+h5{
+  padding-bottom: 5px;
+  padding-top: 3px;
+}
+.genre{
+  border:solid 2px;
+  border-radius: 3px;
+  margin:5px;
+  white-space: nowrap;
+  background-color:#ccc;
+  padding:2px;
+}
