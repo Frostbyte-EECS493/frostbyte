@@ -65,12 +65,18 @@ var resultView = new Vue({
         uploadTask.then( function() {
 		let firebaseRefPostCount = firebase.database().ref("postCount")
 		let firebaseRefPosts = firebase.database().ref("posts")
+		// update post count
   		firebaseRefPostCount.once('value').then(function(snapshot) {
 			firebaseRefPostCount.set(snapshot.val() + 1)
   		})
+		// initialize and add new post
 		let newPostRef = firebaseRefPosts.push()
 		storageRef.getDownloadURL().then( function(url) {
-			newPostRef.set({'imgUrl': url})
+			newPostRef.set({
+				'imgUrl': url,
+				'likes': 0,
+				'comments': '' 
+			})
 		})
 	});	
      }
