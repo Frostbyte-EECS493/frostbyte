@@ -13,7 +13,13 @@ var resultView = new Vue({
 
 	},
   	addOne: function() {
-  		alert();
+      var val = firebase.database().ref('incrementTest');
+      var ret = '';
+      axios
+      .get(val)
+      .then(response => ret = response);
+      alert(ret);
+      console.log(ret);
   		// var firebaseRef = firebase.database().ref("incrementTest");
   		// var current = -1;
   		// firebaseRef.once('value').then(function(snapshot) {
