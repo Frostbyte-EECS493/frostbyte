@@ -45,23 +45,24 @@
 	<!-- TODO: Add SDKs for Firebase products that you want to use
      https://firebase.google.com/docs/web/setup#available-libraries -->
 	<script src="https://www.gstatic.com/firebasejs/7.13.2/firebase-analytics.js"></script>
-
-	<script>
-  	// Your web app's Firebase configuration
-  	var firebaseConfig = {
-    	apiKey: "AIzaSyDeOffdWrRWNqVEkE-A4ZA-VFIQ1jKZBt0",
+  
+  <script>
+    // Your web app's Firebase configuration
+const firebaseConfig = {
+	apiKey: "AIzaSyDeOffdWrRWNqVEkE-A4ZA-VFIQ1jKZBt0",
     	authDomain: "frostbyte-d38da.firebaseapp.com",
-   		databaseURL: "https://frostbyte-d38da.firebaseio.com",
-   		projectId: "frostbyte-d38da",
-   		storageBucket: "frostbyte-d38da.appspot.com",
+   	databaseURL: "https://frostbyte-d38da.firebaseio.com",
+   	projectId: "frostbyte-d38da",
+   	storageBucket: "frostbyte-d38da.appspot.com",
     	messagingSenderId: "798175526214",
-   		appId: "1:798175526214:web:e44436de77a484e5abb947",
-   		measurementId: "G-HH4R0G8PXH"
- 		};
-  // Initialize Firebase
-  	firebase.initializeApp(firebaseConfig);
-  	firebase.analytics();
-  </script>
+   	appId: "1:798175526214:web:e44436de77a484e5abb947",
+   	measurementId: "G-HH4R0G8PXH"
+}
+
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig)
+firebase.analytics()
+</script>
   </body>
 </html>
 

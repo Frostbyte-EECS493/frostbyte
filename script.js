@@ -44,8 +44,8 @@ var resultView = new Vue({
      uploadImg: function() {
      	var name = Date.now();
      	console.log("Uploading at " + name);
-     	var storageRef = firebase.storage().ref('/images/'+ name);
-     	var uploadTask = storageRef.put(selectedFile);
+     	let storageRef = firebase.storage().ref('/images/'+ name);
+     	let uploadTask = storageRef.put(selectedFile);
 
      	uploadTask.on('state_changed', function(snapshot){ 
      		/**
@@ -61,17 +61,15 @@ var resultView = new Vue({
                   console.log('Upload is running'); 
                   break; 
               } **/
-            console.log("Uploading Image")
-          	},function(error) {console.log(error); 
-          	},function() {
-            	// get the uploaded image url back 
-               	uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) { 
-  
-                // You get your url from here 
-                console.log('File available at ', downloadURL); 
-              	document.getElementById('submitImg').removeAttribute('disabled');
-            });
         });
+        uploadTask.then( function() {
+		let firebaseRefPostCount = firebase.database().ref("postCount");
+		let firebaseRefImgUrls = firebase.database().ref("imgUrls");
+  		firebaseRefPostCount.once('value').then(function(snapshot) {
+			firebaseRefPostCount.set(snapshot.val() + 1);
+  		});
+		firebaseRefImgUrls.update({'url': storageRef});
+	});	
      }
   }
 })
