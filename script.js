@@ -63,12 +63,15 @@ var resultView = new Vue({
               } **/
         });
         uploadTask.then( function() {
-		let firebaseRefPostCount = firebase.database().ref("postCount");
-		let firebaseRefImgUrls = firebase.database().ref("imgUrls");
+		let firebaseRefPostCount = firebase.database().ref("postCount")
+		let firebaseRefPosts = firebase.database().ref("posts")
   		firebaseRefPostCount.once('value').then(function(snapshot) {
-			firebaseRefPostCount.set(snapshot.val() + 1);
-  		});
-		firebaseRefImgUrls.update({'url': storageRef});
+			firebaseRefPostCount.set(snapshot.val() + 1)
+  		})
+		let newPostRef = firebaseRefPosts.push()
+		storageRef.getDownloadURL().then( function(url) {
+			newPostRef.set({'imgUrl': url})
+		})
 	});	
      }
   }
