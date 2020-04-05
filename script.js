@@ -2,32 +2,15 @@ var selectedFile;
 var resultView = new Vue({
   el: '#app',
   data: {
-    data: '',
     resultData: [],
-    resultCount: 2,
-    flag: false,
+    display: true //modify this if needed next time
   },
   methods: {
-  	mounted: function () {
-  		var firebaseRef = firebase.storage().ref()
-
-	},
-  	addOne: function() {
-      var val = firebase.database().ref('incrementTest');
-      var ret = '';
-      axios
-      .get(val)
-      .then(response => ret = response);
-      alert(ret);
-      console.log(ret);
-  		// var firebaseRef = firebase.database().ref("incrementTest");
-  		// var current = -1;
-  		// firebaseRef.once('value').then(function(snapshot) {
-  		// 	firebaseRef.set(snapshot.val() + 1);
-  		// });
-  	},
-  	setUploadImg: function() { 
-  		console.log("choosing");
+    mounted: function() {
+    	var firebaseRef = firebase.storage().ref()
+    },
+    setUploadImg: function() { 
+  	console.log("choosing");
         var pic = document.getElementById("setUploadImg"); 
   
         // selected file is that file which user chosen by html form 
@@ -40,9 +23,13 @@ var resultView = new Vue({
         document.getElementById('submitImg').setAttribute('disabled', 'true'); 
         // Save to firebase storage
         resultView.uploadImg();
-     },
-     uploadImg: function() {
-     	var name = Date.now();
+    },
+    uploadImg: function() {
+	// references to database objects
+	let firebaseRefPosts = firebase.database().ref("posts")
+	let firebaseRefPostCount = firebase.database().ref("postCount")
+
+     	let name = Date.now();
      	console.log("Uploading at " + name);
      	let storageRef = firebase.storage().ref('/images/'+ name);
      	let uploadTask = storageRef.put(selectedFile);
@@ -62,14 +49,13 @@ var resultView = new Vue({
                   break; 
               } **/
         });
-        uploadTask.then( function() {
-		let firebaseRefPostCount = firebase.database().ref("postCount")
-		let firebaseRefPosts = firebase.database().ref("posts")
+        // add new post info to firebase database
+        uploadTask.then( () => {
 		// update post count
   		firebaseRefPostCount.once('value').then(function(snapshot) {
 			firebaseRefPostCount.set(snapshot.val() + 1)
   		})
-		// initialize and add new post
+		// initialize new post
 		let newPostRef = firebaseRefPosts.push()
 		storageRef.getDownloadURL().then( function(url) {
 			newPostRef.set({
@@ -78,6 +64,14 @@ var resultView = new Vue({
 				'comments': '' 
 			})
 		})
+		// load all images from updated firebase database
+		firebaseRefPosts.once('value').then( (snapshot) => {
+			snapshot.forEach( (childSnapshot) => {
+				//let childKey = childSnapshot.key
+				//let childData = childSnapshot.val()
+				this.resultData.push(childSnapshot.val())
+			})
+  		})
 	});	
      }
   }
