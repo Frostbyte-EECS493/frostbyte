@@ -1,12 +1,23 @@
-h5{
-  padding-bottom: 5px;
+.header {
+  position: fixed; /* Set the header to fixed position */
+  top: 0; /* Position the header at the top of the page */
+  height: 80px;
+  width: 100%; /* Full width */
+  border-width: 3px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.frostbyte {
+  background-color: #ADD6FF;
+  font-family: 'Yatra One', cursive;
+  color: white;
+  font-size: 50px;
+  width: 100%; /* Full width */
+  padding-left: 30px;
   padding-top: 3px;
 }
-.genre{
-  border:solid 2px;
-  border-radius: 3px;
-  margin:5px;
-  white-space: nowrap;
-  background-color:#ccc;
-  padding:2px;
+
+#app {
+  margin-top: 90px;
 }
