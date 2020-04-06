@@ -12,6 +12,7 @@ var resultView = new Vue({
     	var firebaseRef = firebase.storage().ref()
     },
     setUploadImg: function() { 
+	this.resultData = []
   	console.log("choosing");
         var pic = document.getElementById("setUploadImg"); 
   
@@ -57,45 +58,45 @@ var resultView = new Vue({
      	let storageRef = firebase.storage().ref('/images/'+ name);
      	let uploadTask = storageRef.put(selectedFile);
 
-     	uploadTask.on('state_changed', function(snapshot){ 
-     		/**
-            var progress =  
-             (snapshot.bytesTransferred / snapshot.totalBytes) * 100; 
-              var uploader = document.getElementById('uploader'); 
-              uploader.value=progress; 
-              switch (snapshot.state) { 
-                case firebase.storage.TaskState.PAUSED: 
-                  console.log('Upload is paused'); 
-                  break; 
-                case firebase.storage.TaskState.RUNNING: 
-                  console.log('Upload is running'); 
-                  break; 
-              } **/
-        });
+    
         // add new post info to firebase database
         uploadTask.then( () => {
+		let currentPostId = 0
+  		firebaseRefPostCount.once('value')
 		// update post count
-  		firebaseRefPostCount.once('value').then(function(snapshot) {
-			firebaseRefPostCount.set(snapshot.val() + 1)
+		.then( (snap) => {
+			currentPostId = snap.val()
+			firebaseRefPostCount.set(snap.val() + 1)
   		})
 		// initialize new post
-		let newPostRef = firebaseRefPosts.push()
-		storageRef.getDownloadURL().then( function(url) {
-			newPostRef.set({
-				'imgUrl': url,
-				'likes': 0,
-				'comments': '' 
+		.then( () => {
+			console.log("create new empty post id " + currentPostId)
+			let newPostRef = firebaseRefPosts.push()
+			storageRef.getDownloadURL().then( (url) => {
+				newPostRef.set({
+					'imgUrl': url,
+					'likes': 0,
+					'comments': '',
+					'postId': currentPostId
+				})
 			})
 		})
 		// load all images from updated firebase database
-		firebaseRefPosts.once('value').then( (snapshot) => {
-			snapshot.forEach( (childSnapshot) => {
-				//let childKey = childSnapshot.key
-				//let childData = childSnapshot.val()
-				this.resultData.push(childSnapshot.val())
-			})
-  		})
-      });	
+		.then( () => {
+			console.log("loading images from database")
+			firebaseRefPosts.on('value', (snapshot) => {
+				snapshot.forEach( (childSnapshot) => {
+					//let childKey = childSnapshot.key
+					//let childData = childSnapshot.val()
+					console.log("loading...")
+					console.log(childSnapshot.val())
+					this.resultData.push(childSnapshot.val())
+				})
+  			})
+			console.log("this.resultData values:")
+			console.log(this.resultData)
+		})
+       })	
       
     }
   }, //end of methods
