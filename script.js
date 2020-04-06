@@ -41,9 +41,9 @@ var resultView = new Vue({
           alert("Please enter a valid username.");
           return;
         }
-      this.userSearchData = returnArr;
+      resultView.userSearchData = returnArr;
       console.log("Youve reached it");
-      console.log(this.userSearchData);
+      console.log(resultView.userSearchData);
 
       });
     },

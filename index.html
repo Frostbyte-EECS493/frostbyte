@@ -41,21 +41,31 @@
       <div v-for="result in resultData" v-if="display">
         <div class = "col-lg-6 col-md-6 col-sm-6" style='margin-bottom: 50px; display: inline; height: 250px' >
           <div class="col-sm-4" style='max-width:200px;margin-right: 30px'>
-            <img style='width: 120%; display: inline; ' src="https://cdn.pixabay.com/photo/2018/06/28/17/02/water-lily-3504363__340.jpg">
+            <img style='width: 120%; display: inline; ' v-bind:src="result.imgUrl">
           </div>
         </div>
       </div>
 
       <br>
       <!-- Display User's Images -->
+      <div id=post>
       <div v-for="result in userSearchData">
-        TEST JANNAH HI
         <div class = "col-lg-6 col-md-6 col-sm-6" style='margin-bottom: 50px; display: inline; height: 250px' >
           <div class="col-sm-4" style='max-width:200px;margin-right: 30px'>
-            <img style='width: 120%; display: inline; ' src="https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/most-beautiful-places-in-the-us-1578089758.jpg">
+            <img style='width: 120%; display: inline; ' v-bind:src="result.imgUrl">
+            <div v-if="result.likes !== 1">
+             <strong> {{ result.likes }}</strong> Likes
+            </div>
+            <div v-else>
+              <strong>1</strong> Like
+            </div><br>
+            <div v-for="(comment, user) in result.comments">
+              <strong>{{ user }}:</strong> {{ comment }}
+            </div>
           </div>
         </div>
       </div>
+    </div>
 
     </div>
 
