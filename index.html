@@ -24,18 +24,18 @@
        <!-- See My Images -->
        <form>
          Search by user: 
-         <input v-model="userNameSearch" v-on:keyup.enter="viewOwnerImgs"> <br>
-        <button class = "btn btn-default" id="submitImg" type="submit" v-on:click="viewOwnerImgs">View User Images</button>
+         <input type="text" v-model="userNameSearch" name="fname"> <br>
+        <button class = "btn btn-default" id="submitUser" type="button" v-on:click="viewOwnerImgs()">View User Images</button>
       </form>
     
-      <!-- Display images like IG
+      <!-- Display images like IG -->
       <div v-for="result in resultData" v-if="display">
         <div class = "col-lg-6 col-md-6 col-sm-6" style='margin-bottom: 50px; display: inline; height: 250px' >
           <div class="col-sm-4" style='max-width:200px;margin-right: 30px'>
             <img style='width: 120%; display: inline; ' v-bind:src="result.imgUrl">
           </div>
         </div>
-      </div> -->
+      </div>
     </div>
 
   </body>

@@ -28,17 +28,19 @@ var resultView = new Vue({
     viewOwnerImgs: function() {
       //alert("You typed: " + this.userNameSearch);
 
-      let urlTerm = 'https://frostbyte-d38da.firebaseio.com/' + this.userNameSearch;
-      console.log("made it 0");
+      //let urlTerm = 'https://frostbyte-d38da.firebaseio.com/' + this.userNameSearch;
+      let term = this.userNameSearch + '/photos';
 
-      firebase.database().ref(this.userNameSearch).on('value', function(snapshot) {
+      firebase.database().ref(term).on('value', function(snapshot) {
         let returnArr = [];
-        console.log("made it");
         snapshot.forEach(function(childSnapshot) {
           returnArr.push(childSnapshot.val());
           // Fill the local data property with Firebase data
-          console.log(returnArr);
         });
+        if(!returnArr.length) {
+          alert("Please enter a valid username.");
+        }
+        console.log(returnArr);
       });
     },
     uploadImg: function() {
@@ -89,7 +91,8 @@ var resultView = new Vue({
 				this.resultData.push(childSnapshot.val())
 			})
   		})
-	});	
-     }
-  }
+      });	
+      
+    }
+  } //end of methods
 })
