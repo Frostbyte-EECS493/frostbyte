@@ -3,7 +3,8 @@ var resultView = new Vue({
   el: '#app',
   data: {
     resultData: [],
-    display: true //modify this if needed next time
+    display: true, //modify this if needed next time,
+    userNameSearch: ''
   },
   methods: {
     mounted: function() {
@@ -23,6 +24,22 @@ var resultView = new Vue({
         document.getElementById('submitImg').setAttribute('disabled', 'true'); 
         // Save to firebase storage
         resultView.uploadImg();
+    },
+    viewOwnerImgs: function() {
+      //alert("You typed: " + this.userNameSearch);
+
+      let urlTerm = 'https://frostbyte-d38da.firebaseio.com/' + this.userNameSearch;
+      console.log("made it 0");
+
+      firebase.database().ref(this.userNameSearch).on('value', function(snapshot) {
+        let returnArr = [];
+        console.log("made it");
+        snapshot.forEach(function(childSnapshot) {
+          returnArr.push(childSnapshot.val());
+          // Fill the local data property with Firebase data
+          console.log(returnArr);
+        });
+      });
     },
     uploadImg: function() {
       // references to database objects
