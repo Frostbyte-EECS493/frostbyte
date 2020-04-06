@@ -5,19 +5,27 @@
   width: 100%; /* Full width */
   border-width: 3px;
   display: flex;
-  justify-content: space-between;
 }
 
 .frostbyte {
   background-color: #ADD6FF;
   font-family: 'Yatra One', cursive;
+  text-shadow: 3px 3px #A2B5CD;
   color: white;
   font-size: 50px;
   width: 100%; /* Full width */
   padding-left: 30px;
   padding-top: 3px;
+  padding-right: 0px;
 }
 
 #app {
   margin-top: 90px;
+}
+
+.weatherwidget-io {
+  min-width: 400px;
+  right: 0;
+  max-height: 80px;
+  pointer-events:none;
 }
