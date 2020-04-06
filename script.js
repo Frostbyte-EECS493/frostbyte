@@ -25,9 +25,9 @@ var resultView = new Vue({
         resultView.uploadImg();
     },
     uploadImg: function() {
-	// references to database objects
-	let firebaseRefPosts = firebase.database().ref("posts")
-	let firebaseRefPostCount = firebase.database().ref("postCount")
+      // references to database objects
+      let firebaseRefPosts = firebase.database().ref("posts")
+      let firebaseRefPostCount = firebase.database().ref("postCount")
 
      	let name = Date.now();
      	console.log("Uploading at " + name);
