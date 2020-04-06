@@ -98,5 +98,5 @@ var resultView = new Vue({
       });	
       
     }
-  } //end of methods
+  }, //end of methods
 })

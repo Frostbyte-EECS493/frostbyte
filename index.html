@@ -22,11 +22,11 @@
       </form>
       <br>
        <!-- See My Images -->
-       <form>
+       <div>
          Search by user: 
-         <input type="text" v-model="userNameSearch" name="fname"> <br>
-        <button class = "btn btn-default" id="submitUser" type="button" v-on:click="viewOwnerImgs()">View User Images</button>
-      </form>
+         <input type="text" v-model="userNameSearch" name="fname" @keyup.enter="viewOwnerImgs"> <br>
+        <button class = "btn btn-default" id="submitUser" type="button" @click="viewOwnerImgs">View User Images</button>
+      </div>
     
       <!-- Display images like IG -->
       <div v-for="result in resultData" v-if="display">
