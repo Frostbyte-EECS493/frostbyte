@@ -4,7 +4,8 @@ var resultView = new Vue({
   data: {
     resultData: [],
     display: true, //modify this if needed next time,
-    userNameSearch: ''
+    userNameSearch: '',
+    userSearchData: []
   },
   methods: {
     mounted: function() {
@@ -25,22 +26,25 @@ var resultView = new Vue({
         // Save to firebase storage
         resultView.uploadImg();
     },
+    //This function retrieves user's photos from database based on username (if exists)
     viewOwnerImgs: function() {
-      //alert("You typed: " + this.userNameSearch);
-
-      //let urlTerm = 'https://frostbyte-d38da.firebaseio.com/' + this.userNameSearch;
       let term = this.userNameSearch + '/photos';
 
-      firebase.database().ref(term).on('value', function(snapshot) {
+      firebase.database().ref(term).once('value').then(function(snapshot) {
         let returnArr = [];
         snapshot.forEach(function(childSnapshot) {
-          returnArr.push(childSnapshot.val());
-          // Fill the local data property with Firebase data
+          returnArr.push(childSnapshot.val())
+          //this.userSearchData.push(childSnapshot.val())
+          // this.userSearchData.push(childSnapshot.val());
         });
         if(!returnArr.length) {
           alert("Please enter a valid username.");
+          return;
         }
-        console.log(returnArr);
+      this.userSearchData = returnArr;
+      console.log("Youve reached it");
+      console.log(this.userSearchData);
+
       });
     },
     uploadImg: function() {
