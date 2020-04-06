@@ -12,12 +12,16 @@ var resultView = new Vue({
     	var firebaseRef = firebase.storage().ref()
     },
   setComment: function() {
-    let firebaseRefPosts = firebase.database().ref("posts")
+    let firebaseRefPosts = firebase.database().ref("posts");
     firebaseRefPosts.orderByChild("postId").equalTo(1).once('value')
-		// update post count
 		.then( (snap) => {
-			firebaseRefPosts.set(snap.likes.val() + 1)
-  		})
+      // This only works when postID is unique
+      var postHash = Object.keys(snap.val())[0];
+      var numLikes = snap.val()[postHash].likes;
+
+			var firebaseRefPostLike = firebase.database().ref("posts/" + postHash + "/likes");
+      firebaseRefPostLike.set(numLikes + 1);
+  		});
   },
   likePost: function(){
 
