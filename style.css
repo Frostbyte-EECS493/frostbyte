@@ -29,3 +29,15 @@
   max-height: 80px;
   pointer-events:none;
 }
+
+.post{
+  border: solid darkcyan 2px;
+  background-color: bisque;
+  min-width: 120%;
+  margin-bottom: 30px;
+  display: inline-block;
+}
+
+.img{
+  width: 100%;
+}

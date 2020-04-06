@@ -5,7 +5,8 @@ var resultView = new Vue({
     resultData: [],
     display: true, //modify this if needed next time,
     userNameSearch: '',
-    userSearchData: []
+    userSearchData: [],
+    logName: "user1"
   },
   methods: {
     mounted: function() {
