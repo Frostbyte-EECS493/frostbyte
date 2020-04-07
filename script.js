@@ -101,9 +101,7 @@ var resultView = new Vue({
     },
     //This function retrieves user's photos from database based on username (if exists)
     viewOwnerImgs: function() {
-      let term = this.userNameSearch + '/photos';
-
-      firebase.database().ref(term).once('value')
+      firebase.database().ref("posts").orderByChild("owner").equalTo(this.userNameSearch).once('value')
       .then(function(snapshot) {
         let returnArr = [];
         snapshot.forEach(function(childSnapshot) {
