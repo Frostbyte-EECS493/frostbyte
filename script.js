@@ -2,14 +2,12 @@ var selectedFile;
 var resultView = new Vue({
   el: '#app',
   data: {
-    resultData: [],
     display: true, //modify this if needed next time,
     userNameSearch: '',
     userSearchData: [],
     logName: "user1",
     loggedIn: true,
-    query: '',
-
+    commentFlag: false,
   },
   mounted: function() {
     var firebaseRef = firebase.storage().ref();
@@ -27,7 +25,7 @@ var resultView = new Vue({
     })
   },
   methods: {
-  likePost2: function(pid){
+  likePost: function(pid){
     console.log("xxx")
     let firebaseRefPosts = firebase.database().ref("posts");
     firebaseRefPosts.orderByChild("postId").equalTo(pid).once('value')
@@ -43,19 +41,24 @@ var resultView = new Vue({
       this.userSearchData.filter(post=>post.postId===pid)[0].likes = numLikes + 1;
   		});
   },
-  setComment: function(temp_index) {
+  setComment: function(pid) {
     let firebaseRefPosts = firebase.database().ref("posts");
-    firebaseRefPosts.orderByChild("postId").equalTo((parseInt(temp_index) + 1)).once('value')
+    firebaseRefPosts.orderByChild("postId").equalTo(pid).once('value')
 		.then( (snap) => {
       // This only works when postID is unique
       var postHash = Object.keys(snap.val())[0];
-      let ed = snap.val()[postHash].comments;
-      ed = Object.assign({"user1": this.query}, ed)
+      let new_comments = snap.val()[postHash].comments;
+      // TODO: change user1 to whoever is logged in
+      let added_comment = document.getElementById('query'+pid).value;
+      console.log(added_comment)
+      new_comments = Object.assign({"user1": added_comment}, new_comments)
+      console.log(new_comments)
       let firebaseCommentUpdate = firebase.database().ref("posts/" + postHash)
       firebaseCommentUpdate.once('value').then( (snap) => {
-        firebaseCommentUpdate.update({ comments: ed })
+        firebaseCommentUpdate.update({ comments: new_comments })
       })
-      this.userSearchData[temp_index]['comments'] = ed
+      this.userSearchData.filter(post=>post.postId===pid)[0].comments = new_comments
+      commentFlag = !commentFlag
   		});
   },
   setComment2: function(post_index) {
@@ -74,22 +77,6 @@ var resultView = new Vue({
       this.userSearchData[post_index]['comments'] = ed
     })
   },
-   likePost: function(temp_index){
-    let term = this.userNameSearch + '/photos/' + temp_index.toString();
-    let firebaseRefPosts = firebase.database().ref(term);
-    firebaseRefPosts.once('value')
-		.then( (snap) => {
-      // This only works when postID is unique
-      //var postHash = Object.keys(snap.val())[0];
-      //var numLikes = snap.val()[postHash].likes;;
-      let ed = (snap.val()['likes']);
-      //let number_likes = snap.val()
-      firebaseRefPosts.update({ likes: ed + 1 });
-      this.userSearchData[temp_index]['likes'] = ed + 1
-    })
-  },
-
-
     setUploadImg: function() { 
 	    this.userSearchData = []
   	  console.log("choosing");
