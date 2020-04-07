@@ -19,7 +19,7 @@ var resultView = new Vue({
       var postHash = Object.keys(snap.val())[0];
       var numLikes = snap.val()[postHash].likes;
 
-			let firebaseRefPostLike = firebase.database().ref("posts/" + postHash + "/likes");
+			var firebaseRefPostLike = firebase.database().ref("posts/" + postHash + "/likes");
       firebaseRefPostLike.set(numLikes + 1);
   		});
   },
