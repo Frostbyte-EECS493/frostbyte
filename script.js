@@ -9,10 +9,22 @@ var resultView = new Vue({
     logName: "user1",
     loggedIn: true,
   },
+  mounted: function() {
+    var firebaseRef = firebase.storage().ref();
+    let firebaseRefPosts = firebase.database().ref("posts");
+    console.log("loading images from database")
+    firebaseRefPosts.once('value')
+    .then((snapshot) => {
+      snapshot.forEach( (childSnapshot) => {
+        //let childKey = childSnapshot.key
+        //let childData = childSnapshot.val()
+        console.log("loading...")
+        console.log(childSnapshot.val())
+        resultView.resultData.push(childSnapshot.val())
+      })
+    })
+  },
   methods: {
-    mounted: function() {
-    	var firebaseRef = firebase.storage().ref()
-    },
   setComment: function(temp_index) {
     let firebaseRefPosts = firebase.database().ref("posts");
     firebaseRefPosts.orderByChild("postId").equalTo((parseInt(temp_index) + 1)).once('value')
