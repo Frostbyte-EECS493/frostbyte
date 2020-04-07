@@ -47,7 +47,11 @@ var resultView = new Vue({
       // This only works when postID is unique
       var postHash = Object.keys(snap.val())[0];
       let ed = snap.val()[postHash].comments;
-      ed = Object.assign({"user5": this.query}, ed)
+      ed = Object.assign({"user1": this.query}, ed)
+      let firebaseCommentUpdate = firebase.database().ref("posts/" + postHash)
+      firebaseCommentUpdate.once('value').then( (snap) => {
+        firebaseCommentUpdate.update({ comments: ed })
+      })
       this.userSearchData[temp_index]['comments'] = ed
   		});
   },
