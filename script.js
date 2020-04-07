@@ -13,6 +13,50 @@ var resultView = new Vue({
     mounted: function() {
     	var firebaseRef = firebase.storage().ref()
     },
+  setComment: function(temp_index) {
+    let firebaseRefPosts = firebase.database().ref("posts");
+    firebaseRefPosts.orderByChild("postId").equalTo((parseInt(temp_index) + 1)).once('value')
+		.then( (snap) => {
+      // This only works when postID is unique
+      var postHash = Object.keys(snap.val())[0];
+      var numLikes = snap.val()[postHash].likes;
+
+			var firebaseRefPostLike = firebase.database().ref("posts/" + postHash + "/likes");
+      firebaseRefPostLike.set(numLikes + 1);
+  		});
+  },
+  setComment2: function(post_index) {
+    let term = this.userNameSearch + '/photos/' + post_index.toString();
+    let firebaseRefPosts = firebase.database().ref(term);
+    firebaseRefPosts.once('value')
+		.then( (snap) => {
+      // This only works when postID is unique
+      //var postHash = Object.keys(snap.val())[0];
+      //var numLikes = snap.val()[postHash].likes;;
+      let ed = (snap.val()['comments']);
+      ed = Object.assign({"user5": "Hi Jannah"}, ed)
+      console.log(ed)
+      //let number_likes = snap.val()
+      firebaseRefPosts.update({ comments: ed });
+      this.userSearchData[post_index]['comments'] = ed
+    })
+  },
+   likePost: function(temp_index){
+    let term = this.userNameSearch + '/photos/' + post_index.toString();
+    let firebaseRefPosts = firebase.database().ref(term);
+    firebaseRefPosts.once('value')
+		.then( (snap) => {
+      // This only works when postID is unique
+      //var postHash = Object.keys(snap.val())[0];
+      //var numLikes = snap.val()[postHash].likes;;
+      let ed = (snap.val()['likes']);
+      //let number_likes = snap.val()
+      firebaseRefPosts.update({ likes: ed + 1 });
+      this.userSearchData[post_index]['likes'] = ed + 1
+    })
+  },
+
+
     setUploadImg: function() { 
 	    this.resultData = []
   	  console.log("choosing");
