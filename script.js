@@ -20,7 +20,7 @@ var resultView = new Vue({
         //let childData = childSnapshot.val()
         console.log("loading...")
         console.log(childSnapshot.val())
-        resultView.resultData.push(childSnapshot.val())
+        resultView.userSearchData.push(childSnapshot.val())
       })
     })
   },
@@ -70,7 +70,7 @@ var resultView = new Vue({
 
 
     setUploadImg: function() { 
-	    this.resultData = []
+	    this.userSearchData = []
   	  console.log("choosing");
       var pic = document.getElementById("setUploadImg"); 
   
@@ -150,11 +150,11 @@ var resultView = new Vue({
                     //let childData = childSnapshot.val()
                     console.log("loading...")
                     console.log(childSnapshot.val())
-                    resultView.resultData.push(childSnapshot.val())
+                    resultView.userSearchData.push(childSnapshot.val())
                   })
                 })
-                console.log("this.resultData values:")
-                console.log(resultView.resultData)
+                console.log("this.userSearchData values:")
+                console.log(resultView.userSearchData)
                 document.getElementById('submitImg').removeAttribute('disabled');
               }
 			      })
