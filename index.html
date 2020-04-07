@@ -70,13 +70,13 @@
             <div class="post">
             <img class="img" v-bind:src="result.imgUrl">
             <div v-if="result.likes !== 1">
-             <strong> {{ result.likes }}</strong> Likes
+             <p><strong> {{ result.likes }}</strong> Likes</p>
             </div>
             <div v-else>
-              <strong>1</strong> Like
+              <p><strong>1</strong> Like</p>
             </div><br>
             <div v-for="(comment, user) in result.comments">
-              <strong>{{ user }}:</strong> {{ comment }}
+              <p><strong>{{ user }}:</strong> {{ comment }}</p>
             </div>
           </div>
         </div>
@@ -94,10 +94,10 @@
 		  <img style='width: 120%; display: inline; ' v-bind:src="result.imgUrl">
             	</div>
 	    <div>
-             <strong> {{ result.likes }}</strong> {{result.likes !== 1 ? "likes" : "like"}} <button id="display-index" class = "btn btn-success" @click="likePost(index)" style="margin:2px;">like</button>
+             <p><strong> {{ result.likes }}</strong> {{result.likes !== 1 ? "likes" : "like"}}</p> <button id="display-index" class = "btn btn-success" @click="likePost(index)" style="margin:2px;">like</button>
             </div>
             <div v-for="(comment, user) in result.comments">
-              <strong>{{ user }}:</strong> {{ comment }} 
+              <p><strong>{{ user }}:</strong> {{ comment }}</p>
             </div>
             <button id="season-button1" class = "btn btn-success" @click="setComment2(index)" style="margin:2px;">post</button>
           </div>

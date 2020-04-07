@@ -53,6 +53,9 @@
   margin-right: auto;
 }
 
+.post p {
+  margin-left: 10px;
+}
 
 .post btn{
 }
