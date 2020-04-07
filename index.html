@@ -78,7 +78,7 @@
             	 <div v-for="(comment, user) in result.comments" v-bind:data-arb="commentFlag">
               	   <strong>{{ user }}:</strong> {{ comment }}
             	 </div>
-
+   		 <br>
 		 <div>
 		   <input v-bind:id="'query'+result.postId"  type="text">
 		   <button id="season-button-index" @click="setComment(result.postId)" style="margin:2px;">post</button>
