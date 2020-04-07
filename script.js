@@ -50,16 +50,21 @@ var resultView = new Vue({
       let new_comments = snap.val()[postHash].comments;
       // TODO: change user1 to whoever is logged in
       let added_comment = document.getElementById('query'+pid).value;
-      console.log(added_comment)
       new_comments = Object.assign({"user1": added_comment}, new_comments)
-      console.log(new_comments)
       let firebaseCommentUpdate = firebase.database().ref("posts/" + postHash)
       firebaseCommentUpdate.once('value').then( (snap) => {
         firebaseCommentUpdate.update({ comments: new_comments })
       })
-      this.userSearchData.filter(post=>post.postId===pid)[0].comments = new_comments
-      commentFlag = !commentFlag
-  		});
+      console.log(this.userSearchData.filter(post=>post.postId===pid)[0].comments);
+
+      if (this.userSearchData.filter(post=>post.postId===pid)[0].comments === undefined) {
+        resultView.userSearchData.find(post=>post.postId===pid)["comments"] = new_comments
+      } else {
+        this.userSearchData.filter(post=>post.postId===pid)[0].comments = new_comments
+      }
+      console.log(this.userSearchData.filter(post=>post.postId===pid)[0])
+      resultView.commentFlag = !resultView.commentFlag
+    });
   },
   setComment2: function(post_index) {
     let term = this.userNameSearch + '/photos/' + post_index.toString();

@@ -64,7 +64,7 @@
       <br>
       <!-- Display User's Images -->
       <div>
-      <div v-for="(result, index) in userSearchData">
+      <div v-for="(result, index) in userSearchData" v-bind:data-arb="commentFlag">
         <div class = "col-lg-6 col-md-6 col-sm-6" style='margin-bottom: 50px; display: inline; height: 250px' >
           <div class="col-sm-4" style='max-width:200px;margin-right: 30px'>
             	<div class="img-container">
