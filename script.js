@@ -27,9 +27,10 @@ var resultView = new Vue({
     })
   },
   methods: {
-  likePost2: function(temp_index){
+  likePost2: function(pid){
+    console.log("xxx")
     let firebaseRefPosts = firebase.database().ref("posts");
-    firebaseRefPosts.orderByChild("postId").equalTo((parseInt(temp_index) + 1)).once('value')
+    firebaseRefPosts.orderByChild("postId").equalTo(pid).once('value')
 		.then( (snap) => {
       // This only works when postID is unique
       var postHash = Object.keys(snap.val())[0];
@@ -37,7 +38,9 @@ var resultView = new Vue({
 
 			var firebaseRefPostLike = firebase.database().ref("posts/" + postHash + "/likes");
       firebaseRefPostLike.set(numLikes + 1)
-      this.userSearchData[temp_index]['likes'] = numLikes + 1
+      console.log(pid)
+      console.log(this.userSearchData.filter(post=>post.postId===pid))
+      this.userSearchData.filter(post=>post.postId===pid)[0].likes = numLikes + 1;
   		});
   },
   setComment: function(temp_index) {
