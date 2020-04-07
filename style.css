@@ -33,6 +33,7 @@
 
 .post {
   border: solid #ADD6FF 2px;
+  border-radius: 2px;
   background-color: #f5fcfc;
   margin-bottom: 30px;
   width: 500px;
@@ -57,5 +58,12 @@
   margin-left: 10px;
 }
 
-.post btn{
+.post button {
+  font-size: 11px;
+  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+  border-radius: 4px;
+}
+
+.post button:active {
+  background-color: #0060e8;
 }
