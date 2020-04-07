@@ -95,7 +95,8 @@
             <div v-for="(comment, user) in result.comments">
               <strong>{{ user }}:</strong> {{ comment }} 
             </div>
-            <button id="season-button1" class = "btn btn-success" @click="setComment2(index)" style="margin:2px;">post</button>
+            <button id="season-button-index" class = "btn btn-success" @click="setComment2(index)" style="margin:2px;">post</button>
+            <input v-model="query"  type="text">
           </div>
         </div>
       </div>

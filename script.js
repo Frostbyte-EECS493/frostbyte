@@ -8,6 +8,8 @@ var resultView = new Vue({
     userSearchData: [],
     logName: "user1",
     loggedIn: true,
+    query: '',
+    num_query: 0,
   },
   methods: {
     mounted: function() {
@@ -34,8 +36,9 @@ var resultView = new Vue({
       //var postHash = Object.keys(snap.val())[0];
       //var numLikes = snap.val()[postHash].likes;;
       let ed = (snap.val()['comments']);
-      ed = Object.assign({"user5": "Hi Jannah"}, ed)
+      ed = Object.assign({"user1": this.query}, ed)
       console.log(ed)
+      this.query = ''
       //let number_likes = snap.val()
       firebaseRefPosts.update({ comments: ed });
       this.userSearchData[post_index]['comments'] = ed
