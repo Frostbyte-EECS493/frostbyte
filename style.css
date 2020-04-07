@@ -1,4 +1,5 @@
 .header {
+  z-index: 100;
   position: fixed; /* Set the header to fixed position */
   top: 0; /* Position the header at the top of the page */
   height: 80px;
@@ -30,14 +31,28 @@
   pointer-events:none;
 }
 
-.post{
-  border: solid darkcyan 2px;
-  background-color: bisque;
-  min-width: 120%;
+.post {
+  border: solid #ADD6FF 2px;
+  background-color: #f5fcfc;
   margin-bottom: 30px;
+  width: 500px;
+  height: 300px;
   display: inline-block;
 }
 
-.img{
-  width: 100%;
+.post img-container {
+
+}
+
+.post img {
+  margin-top: 20px;
+  max-width: 300px;
+  max-height: 200px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+.post btn{
 }
