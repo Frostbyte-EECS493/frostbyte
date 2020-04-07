@@ -9,7 +9,7 @@ var resultView = new Vue({
     logName: "user1",
     loggedIn: true,
     query: '',
-    num_query: 0,
+
   },
   mounted: function() {
     var firebaseRef = firebase.storage().ref();
@@ -27,7 +27,7 @@ var resultView = new Vue({
     })
   },
   methods: {
-  setComment: function(temp_index) {
+  likePost2: function(temp_index){
     let firebaseRefPosts = firebase.database().ref("posts");
     firebaseRefPosts.orderByChild("postId").equalTo((parseInt(temp_index) + 1)).once('value')
 		.then( (snap) => {
@@ -36,7 +36,19 @@ var resultView = new Vue({
       var numLikes = snap.val()[postHash].likes;
 
 			var firebaseRefPostLike = firebase.database().ref("posts/" + postHash + "/likes");
-      firebaseRefPostLike.set(numLikes + 1);
+      firebaseRefPostLike.set(numLikes + 1)
+      this.userSearchData[temp_index]['likes'] = numLikes + 1
+  		});
+  },
+  setComment: function(temp_index) {
+    let firebaseRefPosts = firebase.database().ref("posts");
+    firebaseRefPosts.orderByChild("postId").equalTo((parseInt(temp_index) + 1)).once('value')
+		.then( (snap) => {
+      // This only works when postID is unique
+      var postHash = Object.keys(snap.val())[0];
+      let ed = snap.val()[postHash].comments;
+      ed = Object.assign({"user5": this.query}, ed)
+      this.userSearchData[temp_index]['comments'] = ed
   		});
   },
   setComment2: function(post_index) {
@@ -48,9 +60,8 @@ var resultView = new Vue({
       //var postHash = Object.keys(snap.val())[0];
       //var numLikes = snap.val()[postHash].likes;;
       let ed = (snap.val()['comments']);
-      ed = Object.assign({"user1": this.query}, ed)
+      ed = Object.assign({"user5": "Hi Jannah"}, ed)
       console.log(ed)
-      this.query = ''
       //let number_likes = snap.val()
       firebaseRefPosts.update({ comments: ed });
       this.userSearchData[post_index]['comments'] = ed
