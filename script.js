@@ -154,7 +154,8 @@ var resultView = new Vue({
 				    	'imgUrl': url,
 				    	'likes': 0,
 				    	'comments': '',
-				    	'postId': currentPostId
+				    	'postId': currentPostId,
+					'owner': 'user1'
 				    }, function(error) {
               if (error) {
                 console.log(error)
@@ -192,8 +193,3 @@ var resultView = new Vue({
     fjs.parentNode.insertBefore(js,fjs);
   }
 }(document,'script','weatherwidget-io-js');
-
-
-
-
-

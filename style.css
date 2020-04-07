@@ -60,9 +60,11 @@
 .post p {
   font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
   font-size: 13px;
+  margin-left: 10px;
 }
 
 .post h4 {
+  margin-left: -5px;
   font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
   font-size: 20px;
   font-weight: bold;
