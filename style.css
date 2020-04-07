@@ -37,21 +37,25 @@
   background-color: #f5fcfc;
   margin-bottom: 30px;
   width: 500px;
-  height: 300px;
-  display: inline-block;
+  height: 500px;
+  padding: 10px;
+  float: left;
 }
 
 .post img-container {
-
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 200px;
+  max-height: 200px;
+  
 }
 
 .post img {
   margin-top: 20px;
-  max-width: 300px;
+  max-width: 200px;
   max-height: 200px;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
+ 
 }
 
 .post p {
