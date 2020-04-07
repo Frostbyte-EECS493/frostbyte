@@ -31,6 +31,7 @@
   pointer-events:none;
 }
 
+
 .post {
   border: solid #ADD6FF 2px;
   border-radius: 2px;
@@ -38,24 +39,21 @@
   margin-bottom: 30px;
   width: 500px;
   height: 500px;
-  padding: 10px;
-  float: left;
+  padding: 30px;
 }
 
 .post img-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  max-width: 200px;
-  max-height: 200px;
-  
+  width: 300px;
+  height: 200px;
 }
 
 .post img {
-  margin-top: 20px;
-  max-width: 200px;
+  max-width: 300px;
   max-height: 200px;
- 
+  object-fit: cover;
 }
 
 .post p {
@@ -64,8 +62,11 @@
 
 .post button {
   font-size: 11px;
+  background-color: #ADD6FF;
   font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
   border-radius: 4px;
+  border-width: 1px;
+  border-color: #ADD6FF;
 }
 
 .post button:active {

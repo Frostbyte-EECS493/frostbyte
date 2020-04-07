@@ -16,31 +16,27 @@
   <body>
     <div class="header">
         <div class="frostbyte">
-          <b><a href="https://frostbyte-eecs493.github.io/frostbyte/">FrostByte</a></b>
+          <b>FrostByte</b>
         </div>
         <a class="weatherwidget-io" href="https://forecast7.com/en/42d28n83d74/ann-arbor/?unit=us" data-label_1="ANN ARBOR" data-label_2="WEATHER" data-icons="Climacons Animated" data-mode="Current" data-theme="original" data-basecolor="#ADD6FF" data-highcolor="#ffa0a0" data-lowcolor="#579cff" data-cloudfill="#A2B5CD">ANN ARBOR WEATHER</a>
     </div>
     <div id='app'>
-      <template v-if="loggedIn">
+      <template>
       <h3 style="text-align: left; margin-left: 25px;">Welcome back {{ logName }}!
       <span style="float:right; margin-right: 10px; position:relative; font-size: medium;">
         <strong>{{ logName }}</strong>
-        <button class = "btn btn-link" type="button" v-on:click="logOut">Logout</button>
+        <button class = "btn btn-link" type="button">Logout</button>
       </span>
     </h3>
-     <!-- Upload Image -->
-     <form>
-      <input id="setUploadImg" class="file" type="file" value="">
-      <button class = "btn btn-default" id="submitImg" type="submit" v-on:click="setUploadImg">Upload</button>
-    </form>
-    <br>
-      </template>
-      <template v-else>
-        <span style="float:right; margin-right: 10px; position:relative; font-size: medium;">
-          <button class = "btn btn-link" type="button" v-on:click="logIn" >Login</button>
-        </span>
       </template>
    
+
+      <!-- Upload Image -->
+      <form>
+        <input id="setUploadImg" class="file" type="file" value="">
+        <button class = "btn btn-default" id="submitImg" type="submit" v-on:click="setUploadImg">Upload</button>
+      </form>
+      <br>
        <!-- See My Images -->
        <div>
          Search by user: 
@@ -51,7 +47,7 @@
       <!-- Display images like IG 
       <div>
       <div v-for="(result, index) in resultData">
-        <div class = "col-lg-6 col-md-6 col-sm-6" style='margin-bottom: 50px; display: inline; height: 250px' >
+        <div class = "col-lg-6 col-md-6 col-sm-6" style='margin-bottom: 20px; display: inline; height: 250px' >
           <div class="col-sm-4" style='max-width:200px;margin-right: 30px'>
             <img style='width: 120%; display: inline; ' v-bind:src="result.imgUrl">
               
@@ -68,20 +64,20 @@
       <br>
       <!-- Display User's Images -->
       <div>
-      <div v-for="(result, index) in userSearchData" class="row">
-        <div class = "col-lg-6 col-md-6 col-sm-6" style='margin-bottom: 50px; display: inline; height: 250px' >
-          <div class="col-sm-4" style='max-width:200px;margin-right: 30px'>
+      <div v-for="(result, index) in userSearchData">
+	<div class = "col-lg-6 col-md-6 col-sm-6" style='margin-bottom: 100px; display: inline;'>
+          <div class="col-sm-4" style='max-width:200px;margin-right: 30px;'>
 	      <div class="post">		
             	 <div class="img-container">
 		   <img style='width: 120%; display: inline; ' v-bind:src="result.imgUrl">
             	 </div>
-	      
+	      	 <br>
             	 <strong> {{ result.likes }}</strong> {{result.likes !== 1 ? "likes" : "like"}} <button id="display-index" @click="likePost(result.postId)" style="margin:2px;">like</button>
-                
+                 <br>
+          	 <br>
             	 <div v-for="(comment, user) in result.comments" v-bind:data-arb="commentFlag">
               	   <strong>{{ user }}:</strong> {{ comment }}
             	 </div>
-		 <br>
 
 		 <div>
 		   <input v-bind:id="'query'+result.postId"  type="text">
@@ -89,7 +85,7 @@
 		 </div>
 	      </div>
           </div>
-        </div>
+	</div>
       </div>
     </div>
     
