@@ -30,20 +30,22 @@
     </h3>
       </template>
    
+      <!-- See My Images -->
+      <div style='margin-left: 40px;'>
+         Search by user: 
+         <input type="text" v-model="userNameSearch" name="fname" @keyup.enter="viewOwnerImgs">  
+        <button class = "btn btn-default" id="submitUser" type="button" @click="viewOwnerImgs">View User Images</button>
+      </div>
+
+      <br>
 
       <!-- Upload Image -->
-      <form>
+      <form style='margin-left: 40px;'>
         <input id="setUploadImg" class="file" type="file" value="">
         <button class = "btn btn-default" id="submitImg" type="submit" v-on:click="setUploadImg">Upload</button>
       </form>
-      <br>
-       <!-- See My Images -->
-       <div>
-         Search by user: 
-         <input type="text" v-model="userNameSearch" name="fname" @keyup.enter="viewOwnerImgs"> <br>
-        <button class = "btn btn-default" id="submitUser" type="button" @click="viewOwnerImgs">View User Images</button>
-      </div>
-    
+      
+      
       <!-- Display images like IG 
       <div>
       <div v-for="(result, index) in resultData">
