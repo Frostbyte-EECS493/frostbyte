@@ -27,9 +27,12 @@
 .weatherwidget-io {
   min-width: 400px;
   right: 0;
-  max-height: 200px;
-  height: 200px;
   pointer-events:none;
+}
+
+.weatherwidget-container {
+  min-height: 120px;
+  background-color: #ADD6FF;
 }
 
 
