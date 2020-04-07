@@ -44,17 +44,13 @@
 }
 
 .post img-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 300px;
-  height: 200px;
 }
 
 .post img {
   max-width: 300px;
   max-height: 200px;
   object-fit: cover;
+  margin-left: 60px;
 }
 
 .post p {
