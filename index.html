@@ -51,7 +51,7 @@
           <div class="col-sm-4" style='max-width:200px;margin-right: 30px'>
             <img style='width: 120%; display: inline; ' v-bind:src="result.imgUrl">
               
-            <strong> {{ result.likes }}</strong> {{result.likes !== 1 ? "likes" : "like"}} <button id="season-button1" class = "btn btn-success" @click="setComment(index)" style="margin:2px;">like</button>
+            <p><strong> {{ result.likes }}</strong> {{result.likes !== 1 ? "likes" : "like"}}</p> <button id="season-button1" class = "btn btn-success" @click="setComment(index)" style="margin:2px;">like</button>
              {{result.comments}}
              <div v-for="(comment, index2) in result.comments">
               <strong>user1:</strong> {{ comment }} 
@@ -64,20 +64,26 @@
       <br>
       <!-- Display User's Images -->
       <div>
-      <div v-for="(result, index) in userSearchData">
+      <div v-for="(result, index) in userSearchData" class="row">
         <div class = "col-lg-6 col-md-6 col-sm-6" style='margin-bottom: 50px; display: inline; height: 250px' >
           <div class="col-sm-4" style='max-width:200px;margin-right: 30px'>
-            	<div class="img-container">
-		            <img style='width: 120%; display: inline; ' v-bind:src="result.imgUrl">
-            	</div>
-	            <div>
-             <strong> {{ result.likes }}</strong> {{result.likes !== 1 ? "likes" : "like"}} <button id="display-index" class = "btn btn-success" @click="likePost(result.postId)" style="margin:2px;">like</button>
-            </div>
-            <div v-for="(comment, user) in result.comments" v-bind:data-arb="commentFlag">
-              <strong>{{ user }}:</strong> {{ comment }} 
-            </div>
-            <button id="season-button-index" class = "btn btn-success" @click="setComment(result.postId)" style="margin:2px;">post</button>
-            <input v-bind:id="'query'+result.postId"  type="text">
+	      <div class="post">		
+            	 <div class="img-container">
+		   <img style='width: 120%; display: inline; ' v-bind:src="result.imgUrl">
+            	 </div>
+	      
+            	 <strong> {{ result.likes }}</strong> {{result.likes !== 1 ? "likes" : "like"}} <button id="display-index" @click="likePost(result.postId)" style="margin:2px;">like</button>
+                
+            	 <div v-for="(comment, user) in result.comments" v-bind:data-arb="commentFlag">
+              	   <strong>{{ user }}:</strong> {{ comment }}
+            	 </div>
+		 <br>
+
+		 <div>
+		   <input v-bind:id="'query'+result.postId"  type="text">
+		   <button id="season-button-index" @click="setComment(result.postId)" style="margin:2px;">post</button>
+		 </div>
+	      </div>
           </div>
         </div>
       </div>
