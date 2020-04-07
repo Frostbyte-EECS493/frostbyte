@@ -59,7 +59,13 @@
 
 .post p {
   font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
-  font-size: 15px;
+  font-size: 13px;
+}
+
+.post h4 {
+  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+  font-size: 20px;
+  font-weight: bold;
 }
 
 .post button {
@@ -69,7 +75,7 @@
   border-radius: 4px;
   border-width: 1px;
   border-color: #ADD6FF;
-}dd
+}
 
 .post button:active {
   background-color: #0060e8;
