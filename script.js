@@ -42,7 +42,7 @@ var resultView = new Vue({
     })
   },
    likePost: function(temp_index){
-    let term = this.userNameSearch + '/photos/' + post_index.toString();
+    let term = this.userNameSearch + '/photos/' + temp_index.toString();
     let firebaseRefPosts = firebase.database().ref(term);
     firebaseRefPosts.once('value')
 		.then( (snap) => {
@@ -52,7 +52,7 @@ var resultView = new Vue({
       let ed = (snap.val()['likes']);
       //let number_likes = snap.val()
       firebaseRefPosts.update({ likes: ed + 1 });
-      this.userSearchData[post_index]['likes'] = ed + 1
+      this.userSearchData[temp_index]['likes'] = ed + 1
     })
   },
 
