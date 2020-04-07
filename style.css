@@ -25,6 +25,7 @@
 }
 
 .weatherwidget-io {
+  margin-top: 15px;
   min-width: 400px;
   right: 0;
   pointer-events:none;
@@ -72,4 +73,17 @@
 
 .post button:active {
   background-color: #0060e8;
+}
+
+.but {
+  margin-top: 5px;
+  background-color: #ADD6FF;
+  border-radius: 4px;
+  border-width: 1px;
+  border-color: #ADD6FF;
+  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+}
+
+.but:active {
+   background-color: #0060e8;
 }
