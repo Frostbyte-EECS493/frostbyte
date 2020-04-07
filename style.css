@@ -1,4 +1,5 @@
 .header {
+  z-index: 100;
   position: fixed; /* Set the header to fixed position */
   top: 0; /* Position the header at the top of the page */
   height: 80px;

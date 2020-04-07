@@ -22,10 +22,12 @@
     </div>
     <div id='app'>
       <template>
-      <h3 style="text-align: left;">Welcome back {{ logName }}!</h3>
-      <span style="float:right; margin-right: 10px; position:relative;">
-        <strong>{{ logName }}</strong> logout
+      <h3 style="text-align: left; margin-left: 25px;">Welcome back {{ logName }}!
+      <span style="float:right; margin-right: 10px; position:relative; font-size: medium;">
+        <strong>{{ logName }}</strong>
+        <button class = "btn btn-link" type="button">Logout</button>
       </span>
+    </h3>
       </template>
    
 
@@ -102,34 +104,32 @@
     </div>
     
     </div>
-
-  </body>
-
-  <script src="script.js"></script>
-	<!-- The core Firebase JS SDK is always required and must be listed first -->
-	<script src="https://www.gstatic.com/firebasejs/7.13.2/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/7.13.2/firebase-database.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/7.13.2/firebase-storage.js"></script>
-	<!-- TODO: Add SDKs for Firebase products that you want to use
-     https://firebase.google.com/docs/web/setup#available-libraries -->
-	<script src="https://www.gstatic.com/firebasejs/7.13.2/firebase-analytics.js"></script>
+	  <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.13.2/firebase.js"></script>
+	  <script src="https://www.gstatic.com/firebasejs/7.13.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.13.2/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.13.2/firebase-storage.js"></script>
+	  <!-- TODO: Add SDKs for Firebase products that you want to use
+       https://firebase.google.com/docs/web/setup#available-libraries -->
+	  <script src="https://www.gstatic.com/firebasejs/7.13.2/firebase-analytics.js"></script>
   
-  <script>
-    // Your web app's Firebase configuration
-const firebaseConfig = {
-	apiKey: "AIzaSyDeOffdWrRWNqVEkE-A4ZA-VFIQ1jKZBt0",
-    	authDomain: "frostbyte-d38da.firebaseapp.com",
-   	databaseURL: "https://frostbyte-d38da.firebaseio.com",
-   	projectId: "frostbyte-d38da",
-   	storageBucket: "frostbyte-d38da.appspot.com",
-    	messagingSenderId: "798175526214",
-   	appId: "1:798175526214:web:e44436de77a484e5abb947",
-   	measurementId: "G-HH4R0G8PXH"
-}
+    <script>
+      // Your web app's Firebase configuration
+      const firebaseConfig = {
+	      apiKey: "AIzaSyDeOffdWrRWNqVEkE-A4ZA-VFIQ1jKZBt0",
+       	authDomain: "frostbyte-d38da.firebaseapp.com",
+     	  databaseURL: "https://frostbyte-d38da.firebaseio.com",
+       	projectId: "frostbyte-d38da",
+       	storageBucket: "frostbyte-d38da.appspot.com",
+      	messagingSenderId: "798175526214",
+       	appId: "1:798175526214:web:e44436de77a484e5abb947",
+       	measurementId: "G-HH4R0G8PXH"
+      }
 
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig)
-firebase.analytics()
-</script>
+    // Initialize Firebase
+      firebase.initializeApp(firebaseConfig)
+      firebase.analytics()
+    </script>
+    <script src="script.js"></script>
   </body>
 </html>
