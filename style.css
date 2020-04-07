@@ -2,7 +2,7 @@
   z-index: 100;
   position: fixed; /* Set the header to fixed position */
   top: 0; /* Position the header at the top of the page */
-  height: 80px;
+  height: 120px;
   width: 100%; /* Full width */
   border-width: 3px;
   display: flex;
@@ -13,23 +13,25 @@
   font-family: 'Yatra One', cursive;
   text-shadow: 3px 3px #A2B5CD;
   color: white;
-  font-size: 50px;
+  font-size: 80px;
   width: 100%; /* Full width */
   padding-left: 30px;
-  padding-top: 3px;
+  padding-top: 10px;
   padding-right: 0px;
 }
 
 #app {
-  margin-top: 90px;
+  margin-top: 150px;
 }
 
 .weatherwidget-io {
   min-width: 400px;
   right: 0;
-  max-height: 80px;
+  max-height: 200px;
+  height: 200px;
   pointer-events:none;
 }
+
 
 .post {
   border: solid #ADD6FF 2px;
@@ -37,31 +39,32 @@
   background-color: #f5fcfc;
   margin-bottom: 30px;
   width: 500px;
-  height: 300px;
-  display: inline-block;
+  height: 500px;
+  padding: 30px;
 }
 
 .post img-container {
-
 }
 
 .post img {
-  margin-top: 20px;
   max-width: 300px;
   max-height: 200px;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
+  object-fit: cover;
+  margin-left: 60px;
 }
 
 .post p {
-  margin-left: 10px;
+  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+  font-size: 14px;
 }
 
 .post button {
   font-size: 11px;
+  background-color: #ADD6FF;
   font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
   border-radius: 4px;
+  border-width: 1px;
+  border-color: #ADD6FF;
 }
 
 .post button:active {

@@ -41,6 +41,13 @@ var resultView = new Vue({
       this.userSearchData.filter(post=>post.postId===pid)[0].likes = numLikes + 1;
   		});
   },
+  logOut: function(){
+    this.loggedIn = false;
+    //alert("Goodbye, " + this.logName + "!");
+  },
+  logIn: function(){
+    this.loggedIn = true;
+  },
   setComment: function(pid) {
     let firebaseRefPosts = firebase.database().ref("posts");
     firebaseRefPosts.orderByChild("postId").equalTo(pid).once('value')
