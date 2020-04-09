@@ -12,6 +12,9 @@
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"></script>
     </title>
+
+   <!-- ****************************************************************************************************** -->
+
    </head>
   <body>
     <div class="header">
@@ -22,10 +25,11 @@
           <a class="weatherwidget-io" href="https://forecast7.com/en/42d28n83d74/ann-arbor/?unit=us" data-label_1="ANN ARBOR" data-label_2="WEATHER" data-icons="Climacons Animated" data-mode="Current" data-theme="original" data-basecolor="#ADD6FF" data-highcolor="#ffa0a0" data-lowcolor="#579cff" data-cloudfill="#A2B5CD">ANN ARBOR WEATHER</a>
         </div>
    </div>
+
     <div id='app'>
       <!-- if logged in, home page will show-->
       <template v-if="loggedIn">
-      <h3 style="text-align: left; margin-left: 25px;">Welcome back, {{ logName }}!
+      <h3 style="text-align: left; margin-left: 25px;">Welcome back, {{ screenName }}!
       <span style="float:right; margin-right: 10px; position:relative; font-size: medium;">
         <strong>{{ logName }}</strong>
         <button class="but btn-link" type="button" v-on:click="logOut">Logout</button>
@@ -41,7 +45,7 @@
       <template v-else>
         <span style="float:right; margin-right: 10px; position:relative; font-size: medium;">
         <button class="but btn-link" type="button" v-on:click="logIn">Login</button>
-        <button class="but btn-link" type="button" v-on:click="createAccount">Create Account</button>
+        <button class="but btn-link" type="button" v-on:click="createAccountPage">Create Account</button>
       </span>
       </template>
 
@@ -49,17 +53,36 @@
       <template v-if="logPage">
         <h3 style="margin-left: 25px;">Please sign in!</h3>
 
-      <form action="/action_page.php" style="margin-left: 25px;">
+      <form style="margin-left: 25px;">
+        <label for="name">Name:</label>
+        <input type="text" v-model="screenName" style="margin-left: 35px;"><br><br>
         <label for="username">Username:</label>
-        <input type="text" v-model="usernameInput"><br><br>
+        <input type="text" v-model="usernameInput" style="margin-left: 7px;"><br><br>
         <label for="password">Password:</label>
-        <input type="password" v-model="passwordInput"><br><br>
+        <input type="password" v-model="passwordInput" style="margin-left: 10px;"><br><br>
         <button class="but btn-default" type="button" v-on:click="checkCredentials">Login</button>
+      </form>
+      </template>
+
+       <!--login screen to access account-->
+       <template v-if="createPage">
+        <h3 style="margin-left: 25px;">Please create an account!</h3>
+
+      <form style="margin-left: 25px;">
+        <label for="name">Name:</label>
+        <input type="text" v-model="screenName" style="margin-left: 35px;"><br><br>
+        <label for="username">Username:</label>
+        <input type="text" v-model="usernameInput" style="margin-left: 7px;"><br><br>
+        <label for="password">Password:</label>
+        <input type="password" v-model="passwordInput" style="margin-left: 10px;"><br><br>
+        <label for="password">Password:</label>
+        <input type="password" v-model="passwordDouble" style="margin-left: 10px;"><br><br>
+        <button class="but btn-default" type="button" v-on:click="createAccount">Create Account</button>
       </form>
       </template>
    
       <!-- See My Images -->
-      <div style='margin-left: 40px;' v-if="!logPage">
+      <div style='margin-left: 40px;' v-if="!logPage && !createPage">
          Search by user: 
          <input type="text" v-model="userNameSearch" @keyup.enter="viewOwnerImgs">  
         <button class = "but" id="submitUser" type="button" @click="viewOwnerImgs">View User Images</button>

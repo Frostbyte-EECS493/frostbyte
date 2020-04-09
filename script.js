@@ -6,12 +6,15 @@ var resultView = new Vue({
     userNameSearch: '',
     userSearchData: [],
 
-    logName: "user1",
+    logName: 'user1',
+    screenName:'',
     usernameInput: '',
     passwordInput: '',
+    passwordDouble: '',
 
     logPage: false,
     loggedIn: false,
+    createPage: false,
 
     commentFlag: false,
   },
@@ -54,10 +57,9 @@ var resultView = new Vue({
   logIn: function(){
     //this.loggedIn = true;
     this.logPage = true;
+    this.createPage = false;
   },
   checkCredentials: function(){
-    //this.loggedIn = true;
-    //this.logPage = false;
 
     let user = this.usernameInput;
     let pass = this.passwordInput;
@@ -73,23 +75,29 @@ var resultView = new Vue({
           passDatabase = childSnapshot.val()["password"];
 
           if(user===userDatabase && pass===passDatabase) {
-            console.log("trying");
-            alert("match");
             found = true;
+            resultView.loggedIn = true;
+            resultView.logPage = false;
+            resultView.logName = user;
+            resultView.screenName = childSnapshot.val()["name"];
             return;
           }
-
         });
         if (!found) {
           alert("Please enter a valid username.");
           return;
         }
       });
-    console.log("Credentials");
-    console.log(creds);
+  },
+  createAccountPage: function(){
+    this.createPage = true;
+    this.logPage = false;
   },
   createAccount: function(){
+    
     alert("work in progress");
+
+    //this.createPage = false;
   },
   setComment: function(pid) {
     let firebaseRefPosts = firebase.database().ref("posts");
