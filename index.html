@@ -23,29 +23,55 @@
         </div>
    </div>
     <div id='app'>
+      <!-- if logged in, home page will show-->
       <template v-if="loggedIn">
       <h3 style="text-align: left; margin-left: 25px;">Welcome back, {{ logName }}!
       <span style="float:right; margin-right: 10px; position:relative; font-size: medium;">
-        <!-- <strong>{{ logName }}</strong>
-        <button class = "but btn-link" type="button">Logout</button> -->
+        <strong>{{ logName }}</strong>
+        <button class="but btn-link" type="button" v-on:click="logOut">Logout</button>
       </span>
     </h3>
+    <!-- Upload Image -->
+    <form style='margin-left: 40px;'>
+      <input id="setUploadImg" class="file" type="file" value="">
+      <button class = "but" id="submitImg" type="submit" v-on:click="setUploadImg">Upload</button>
+    </form>
+      </template>
+      <!-- otherwise only login option and create account option will show-->
+      <template v-else>
+        <span style="float:right; margin-right: 10px; position:relative; font-size: medium;">
+        <button class="but btn-link" type="button" v-on:click="logIn">Login</button>
+        <button class="but btn-link" type="button" v-on:click="createAccount">Create Account</button>
+      </span>
+      </template>
+
+      <!--login screen to access account-->
+      <template v-if="logPage">
+        <h3 style="margin-left: 25px;">Please sign in!</h3>
+
+      <form action="/action_page.php" style="margin-left: 25px;">
+        <label for="username">Username:</label>
+        <input type="text" v-model="usernameInput"><br><br>
+        <label for="password">Password:</label>
+        <input type="password" v-model="passwordInput"><br><br>
+        <button class="but btn-default" type="button" v-on:click="checkCredentials">Login</button>
+      </form>
       </template>
    
       <!-- See My Images -->
-      <div style='margin-left: 40px;'>
+      <div style='margin-left: 40px;' v-if="!logPage">
          Search by user: 
-         <input type="text" v-model="userNameSearch" name="fname" @keyup.enter="viewOwnerImgs">  
+         <input type="text" v-model="userNameSearch" @keyup.enter="viewOwnerImgs">  
         <button class = "but" id="submitUser" type="button" @click="viewOwnerImgs">View User Images</button>
       </div>
 
       <br>
 
-      <!-- Upload Image -->
+      <!-- Upload Image 
       <form style='margin-left: 40px;'>
         <input id="setUploadImg" class="file" type="file" value="">
         <button class = "but" id="submitImg" type="submit" v-on:click="setUploadImg">Upload</button>
-      </form>
+      </form>-->
       
       
       <!-- Display images like IG 
@@ -67,7 +93,7 @@
       </div>-->
       <br>
       <!-- Display User's Images -->
-      <div>
+      <div v-if="loggedIn">
       <div v-for="(result, index) in userSearchData">
 	<div class = "col-lg-6 col-md-6 col-sm-6" style='margin-bottom: 20px; display: inline;'>
           <div class="col-sm-4" style='max-width:200px;margin-right: 20px;'>

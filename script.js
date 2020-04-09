@@ -5,21 +5,27 @@ var resultView = new Vue({
     display: true, //modify this if needed next time,
     userNameSearch: '',
     userSearchData: [],
+
     logName: "user1",
-    loggedIn: true,
+    usernameInput: '',
+    passwordInput: '',
+
+    logPage: false,
+    loggedIn: false,
+
     commentFlag: false,
   },
   mounted: function() {
     var firebaseRef = firebase.storage().ref();
     let firebaseRefPosts = firebase.database().ref("posts");
-    console.log("loading images from database")
+    //console.log("loading images from database")
     firebaseRefPosts.once('value')
     .then((snapshot) => {
       snapshot.forEach( (childSnapshot) => {
         //let childKey = childSnapshot.key
         //let childData = childSnapshot.val()
-        console.log("loading...")
-        console.log(childSnapshot.val())
+        //console.log("loading...")
+        //console.log(childSnapshot.val())
         resultView.userSearchData.push(childSnapshot.val())
       })
     })
@@ -46,7 +52,44 @@ var resultView = new Vue({
     //alert("Goodbye, " + this.logName + "!");
   },
   logIn: function(){
-    this.loggedIn = true;
+    //this.loggedIn = true;
+    this.logPage = true;
+  },
+  checkCredentials: function(){
+    //this.loggedIn = true;
+    //this.logPage = false;
+
+    let user = this.usernameInput;
+    let pass = this.passwordInput;
+    let userDatabase = '';
+    let passDatabase = '';
+    let found = false;
+
+    let creds = firebase.database().ref("Credentials");
+    creds.orderByChild("owner").once('value')
+      .then(function(snapshot) {
+        snapshot.forEach(function(childSnapshot) {
+          userDatabase = childSnapshot.val()["username"];
+          passDatabase = childSnapshot.val()["password"];
+
+          if(user===userDatabase && pass===passDatabase) {
+            console.log("trying");
+            alert("match");
+            found = true;
+            return;
+          }
+
+        });
+        if (!found) {
+          alert("Please enter a valid username.");
+          return;
+        }
+      });
+    console.log("Credentials");
+    console.log(creds);
+  },
+  createAccount: function(){
+    alert("work in progress");
   },
   setComment: function(pid) {
     let firebaseRefPosts = firebase.database().ref("posts");
@@ -62,14 +105,14 @@ var resultView = new Vue({
       firebaseCommentUpdate.once('value').then( (snap) => {
         firebaseCommentUpdate.update({ comments: new_comments })
       })
-      console.log(this.userSearchData.filter(post=>post.postId===pid)[0].comments);
+      //console.log(this.userSearchData.filter(post=>post.postId===pid)[0].comments);
 
       if (this.userSearchData.filter(post=>post.postId===pid)[0].comments === undefined) {
         resultView.userSearchData.find(post=>post.postId===pid)["comments"] = new_comments
       } else {
         this.userSearchData.filter(post=>post.postId===pid)[0].comments = new_comments
       }
-      console.log(this.userSearchData.filter(post=>post.postId===pid)[0])
+      //console.log(this.userSearchData.filter(post=>post.postId===pid)[0])
       resultView.commentFlag = !resultView.commentFlag
     });
   },
@@ -83,7 +126,7 @@ var resultView = new Vue({
       //var numLikes = snap.val()[postHash].likes;;
       let ed = (snap.val()['comments']);
       ed = Object.assign({"user5": "Hi Jannah"}, ed)
-      console.log(ed)
+      //console.log(ed)
       //let number_likes = snap.val()
       firebaseRefPosts.update({ comments: ed });
       this.userSearchData[post_index]['comments'] = ed
@@ -120,8 +163,6 @@ var resultView = new Vue({
           return;
         }
         resultView.userSearchData = returnArr;
-        console.log("Youve reached it");
-        console.log(resultView.userSearchData);
       });
     },
     uploadImg: function() {
