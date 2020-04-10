@@ -55,9 +55,11 @@
 
       <form style="margin-left: 25px;">
         <label for="username">Username:</label>
-        <input type="text" v-model="usernameInput" style="margin-left: 7px;"><br><br>
+        <input type="text" v-model="usernameInput" @keyup.enter="checkCredentials" style="margin-left: 7px;">
+        (case sensitive) <br><br>
         <label for="password">Password:</label>
-        <input type="password" v-model="passwordInput" style="margin-left: 10px;"><br><br>
+        <input type="password" v-model="passwordInput" @keyup.enter="checkCredentials" style="margin-left: 10px;">
+        (case sensitive) <br><br>
         <button class="but btn-default" type="button" v-on:click="checkCredentials">Login</button>
       </form>
       </template>
@@ -68,13 +70,13 @@
 
       <form style="margin-left: 25px;">
         <label for="name">Name:</label>
-        <input type="text" v-model="screenName" style="margin-left: 35px;"><br><br>
+        <input type="text" v-model="screenName" style="margin-left: 35px;"> (case sensitive)<br><br>
         <label for="username">Username:</label>
-        <input type="text" v-model="usernameInput" style="margin-left: 7px;"><br><br>
+        <input type="text" v-model="usernameInput" style="margin-left: 7px;"> (case sensitive) <br><br>
         <label for="password">Password:</label>
-        <input type="password" v-model="passwordInput" style="margin-left: 10px;"><br><br>
+        <input type="password" v-model="passwordInput" style="margin-left: 10px;"> (case sensitive) <br><br>
         <label for="password">Password:</label>
-        <input type="password" v-model="passwordDouble" style="margin-left: 10px;"><br><br>
+        <input type="password" v-model="passwordDouble" style="margin-left: 10px;"> (please retype) <br><br>
         <button class="but btn-default" type="button" v-on:click="createAccount">Create Account</button>
       </form>
       </template>

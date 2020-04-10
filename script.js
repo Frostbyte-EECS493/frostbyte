@@ -6,7 +6,7 @@ var resultView = new Vue({
     userNameSearch: '',
     userSearchData: [],
 
-    logName: 'user1',
+    logName: '',
     screenName:'',
     usernameInput: '',
     passwordInput: '',
@@ -50,15 +50,25 @@ var resultView = new Vue({
       this.userSearchData.filter(post=>post.postId===pid)[0].likes = numLikes + 1;
   		});
   },
+  // log out of account
   logOut: function(){
     this.loggedIn = false;
-    //alert("Goodbye, " + this.logName + "!");
+    // update user's attribute to false
+    firebase.database().ref("Credentials/" + resultView.usernameInput).update({loggedIn: "false"});
+    console.log("updated " + resultView.usernameInput + " to false");
+    // reset all typed user input
+    this.logName = '';
+    this.screenName = '',
+    this.usernameInput = '';
+    this.passwordInput = '';
+    this.passwordDouble = '';
   },
+  // takes user to login page (but not logged in yet)
   logIn: function(){
-    //this.loggedIn = true;
     this.logPage = true;
     this.createPage = false;
   },
+  // checks username/password to log user in
   checkCredentials: function(){
 
     let user = this.usernameInput;
@@ -66,6 +76,7 @@ var resultView = new Vue({
     let userDatabase = '';
     let passDatabase = '';
     let found = false;
+    let userNum = 1;
 
     let creds = firebase.database().ref("Credentials");
     creds.orderByChild("owner").once('value')
@@ -80,8 +91,11 @@ var resultView = new Vue({
             resultView.logPage = false;
             resultView.logName = user;
             resultView.screenName = childSnapshot.val()["name"];
+            firebase.database().ref("Credentials/" + resultView.usernameInput).update({loggedIn: "true"});
+            console.log("updated " + userNum + " to true");
             return;
           }
+          userNum +=1;
         });
         if (!found) {
           alert("Please enter a valid username.");
@@ -89,16 +103,67 @@ var resultView = new Vue({
         }
       });
   },
+  // takes user to create account page
   createAccountPage: function(){
     this.createPage = true;
     this.logPage = false;
+    this.loggedIn = false;
   },
-  createAccount: function(){
-    
-    alert("work in progress");
 
-    //this.createPage = false;
+  // creates account for user
+  createAccount: function(){
+
+    // check that no user inputs are empty
+    let name = this.usernameInput;
+    let userTaken = false;
+
+    if (name === '' || this.screenName === '' || this.passwordInput === '') {
+      alert("Please make sure all fields are filled out.");
+            return;
+    }
+
+    // check that no username is taken before creating accounts
+    var query = firebase.database().ref("Credentials").orderByKey();
+    query.once("value")
+    .then(function(snapshot) {
+    snapshot.forEach(function(childSnapshot) {
+      // childData will be the actual contents of the child
+      var username = childSnapshot.val()["username"];
+      if(name===username) {
+        alert("Username taken. Please select a different username.");
+        userTaken = true;
+        return;
+      }
+    });
+    // check that passwords match
+    if (this.passwordInput !== this.passwordDouble) {
+      alert("Please make sure passwords match.");
+      return;
+    }
+    if (userTaken) {
+      return;
+    }
+    // add account to firebase database
+    //increment userCount in database
+    let numUsers = 1;
+    firebase.database().ref("userCount").once('value').then(function(snapshot) {
+      numUsers += snapshot.val();
+      firebase.database().ref().update({userCount: numUsers});
+      firebase.database().ref("Credentials/" + resultView.usernameInput).set({
+        loggedIn: "true",
+        name: resultView.screenName,
+        password: resultView.passwordInput,
+        username: resultView.usernameInput
+      });
+    });
+
+    alert("Welcome to FrostByte, " + resultView.screenName + "!");
+    resultView.createPage = false;
+    resultView.loggedIn = true;
+
+  });
   },
+
   setComment: function(pid) {
     let firebaseRefPosts = firebase.database().ref("posts");
     firebaseRefPosts.orderByChild("postId").equalTo(pid).once('value')
@@ -113,7 +178,7 @@ var resultView = new Vue({
       firebaseCommentUpdate.once('value').then( (snap) => {
         firebaseCommentUpdate.update({ comments: new_comments })
       })
-      //console.log(this.userSearchData.filter(post=>post.postId===pid)[0].comments);
+      //(this.userSearchData.filter(post=>post.postId===pid)[0].comments);
 
       if (this.userSearchData.filter(post=>post.postId===pid)[0].comments === undefined) {
         resultView.userSearchData.find(post=>post.postId===pid)["comments"] = new_comments
