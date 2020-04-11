@@ -68,6 +68,20 @@ var resultView = new Vue({
     this.logPage = true;
     this.createPage = false;
   },
+  home_logged_in: function() {
+    this.logPage = false
+    this.createPage = false
+    if (this.loggedIn) {
+      var firebaseRef = firebase.storage().ref();
+      let firebaseRefPosts = firebase.database().ref("posts");
+      this.userSearchData = []
+      firebaseRefPosts.once('value').then((snapshot) => {
+        snapshot.forEach( (childSnapshot) => {
+          resultView.userSearchData.push(childSnapshot.val())
+        })
+      })
+    }
+  },
   // checks username/password to log user in
   checkCredentials: function(){
 
@@ -98,7 +112,7 @@ var resultView = new Vue({
           userNum +=1;
         });
         if (!found) {
-          alert("Please enter a valid username.");
+          alert("Please enter a valid username/password.");
           return;
         }
       });
@@ -232,7 +246,7 @@ var resultView = new Vue({
           // this.userSearchData.push(childSnapshot.val());
         });
         if(!returnArr.length) {
-          alert("Please enter a valid username.");
+          alert("Please enter a valid username/this user has not uploaded any photos.");
           return;
         }
         resultView.userSearchData = returnArr;

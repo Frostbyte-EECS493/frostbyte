@@ -17,16 +17,18 @@
 
    </head>
   <body>
-    <div class="header">
+
+    <div id='app'>
+
+      <div class="header">
         <div class="frostbyte">
-          <b><a href="https://frostbyte-eecs493.github.io/frostbyte/">FrostByte</a></b>
+          <b><a v-on:click="home_logged_in">FrostByte</a></b>
         </div>
         <div class="weatherwidget-container">
           <a class="weatherwidget-io" href="https://forecast7.com/en/42d28n83d74/ann-arbor/?unit=us" data-label_1="ANN ARBOR" data-label_2="WEATHER" data-icons="Climacons Animated" data-mode="Current" data-theme="original" data-basecolor="#ADD6FF" data-highcolor="#ffa0a0" data-lowcolor="#579cff" data-cloudfill="#A2B5CD">ANN ARBOR WEATHER</a>
         </div>
-   </div>
+      </div>
 
-    <div id='app'>
       <!-- if logged in, home page will show-->
       <template v-if="loggedIn">
       <h3 style="text-align: left; margin-left: 25px;">Welcome back, {{ screenName }}!
@@ -82,7 +84,7 @@
       </template>
    
       <!-- See My Images -->
-      <div style='margin-left: 40px;' v-if="!logPage && !createPage">
+      <div style='margin-left: 40px;' v-if="!logPage && !createPage && loggedIn">
          Search by user: 
          <input type="text" v-model="userNameSearch" @keyup.enter="viewOwnerImgs">  
         <button class = "but" id="submitUser" type="button" @click="viewOwnerImgs">View User Images</button>
