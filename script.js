@@ -33,6 +33,27 @@ var resultView = new Vue({
       })
     })
   },
+  computed: {
+    isLike: function(pid){
+      let firebaseRefPosts3 = firebase.database().ref("posts");
+      firebaseRefPosts3.orderByChild("postId").equalTo(pid).once('value')
+      
+      .then( (snap) => {
+      // This only works when postID is unique
+      let tempHash = Object.keys(snap.val())[0];
+      let likeUsers = snap.val()[tempHash].collectiveLikeUsers;
+      if(!likeUsers || !("user1" in likeUsers)){
+        return 1;
+      }
+      else if(likeUsers && likeUsers["user1"] === 1){
+        return 2;
+      }
+      else{
+        return 1;
+      }
+      });
+    }
+  },
   methods: {
   likePost: function(pid){
     console.log("xxx")
@@ -42,12 +63,49 @@ var resultView = new Vue({
       // This only works when postID is unique
       var postHash = Object.keys(snap.val())[0];
       var numLikes = snap.val()[postHash].likes;
+      let likeUsers = snap.val()[postHash].collectiveLikeUsers;
+      /*
+      var postHash = Object.keys(snap.val())[0];
+      let new_comments = snap.val()[postHash].comments;
+      // TODO: change user1 to whoever is logged in
+      let added_comment = 1
+      new_comments = Object.assign({"user1": added_comment}, new_comments)
+      let firebaseCommentUpdate = firebase.database().ref("posts/" + postHash)
+      firebaseCommentUpdate.once('value').then( (snap) => {
+        firebaseCommentUpdate.update({ comments: new_comments })
+      }) 
+      */
 
 			var firebaseRefPostLike = firebase.database().ref("posts/" + postHash + "/likes");
-      firebaseRefPostLike.set(numLikes + 1)
+      //firebaseRefPostLike.set(numLikes + 1)
       console.log(pid)
       console.log(this.userSearchData.filter(post=>post.postId===pid))
-      this.userSearchData.filter(post=>post.postId===pid)[0].likes = numLikes + 1;
+      //if the username is not in the dictionary containing the users who like or dislike the post
+      //then add it into the dictionary
+      if(!likeUsers || !("user1" in likeUsers)){
+        likeUsers = Object.assign({"user1": 1}, likeUsers)
+        let firebaseCommentUpdate = firebase.database().ref("posts/" + postHash)
+        firebaseCommentUpdate.once('value').then( (snap) => {
+          firebaseCommentUpdate.update({ collectiveLikeUsers: likeUsers })
+        }) 
+        this.userSearchData.filter(post=>post.postId===pid)[0].likes = numLikes + 1;
+        firebaseRefPostLike.set(numLikes + 1)
+      }
+      else {
+        var firebaseReflike = firebase.database().ref("posts/" + postHash + "/collectiveLikeUsers/user1");
+        if(likeUsers[("user1")] === 0){
+          //likeUsers[("user1")] = 1
+          firebaseReflike.set(1)
+          firebaseRefPostLike.set(numLikes + 1)
+          this.userSearchData.filter(post=>post.postId===pid)[0].likes = numLikes + 1;
+        }
+        else{
+          firebaseReflike.set(0)
+          firebaseRefPostLike.set(numLikes - 1)
+          this.userSearchData.filter(post=>post.postId===pid)[0].likes = numLikes - 1;
+        }
+      }
+      //this.userSearchData.filter(post=>post.postId===pid)[0].likes = numLikes + 1;
   		});
   },
   // log out of account
@@ -283,7 +341,8 @@ var resultView = new Vue({
 				    	'likes': 0,
 				    	'comments': '',
 				    	'postId': currentPostId,
-					'owner': 'user1'
+          'owner': 'user1',
+          'collectiveLikeUsers': {}
 				    }, function(error) {
               if (error) {
                 console.log(error)
