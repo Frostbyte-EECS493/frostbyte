@@ -68,6 +68,7 @@ var resultView = new Vue({
     this.logPage = true;
     this.createPage = false;
   },
+  // keep home page if user is logged in
   home_logged_in: function() {
     this.logPage = false
     this.createPage = false
@@ -246,7 +247,7 @@ var resultView = new Vue({
           // this.userSearchData.push(childSnapshot.val());
         });
         if(!returnArr.length) {
-          alert("Please enter a valid username/this user has not uploaded any photos.");
+          alert("There are no photos to show for this user.");
           return;
         }
         resultView.userSearchData = returnArr;
