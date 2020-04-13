@@ -128,8 +128,7 @@
 		   <img style='width: 120%; display: inline; ' v-bind:src="result.imgUrl">
             	 </div>
 	      	 <br>
-           <p><strong> {{ result.likes }}</strong> {{result.likes !== 1 ? "likes" : "like"}}  <button id="display-index" @click="likePost(result.postId)" style="margin:2px;">{{ isLike(result.postId) === 1 ? "dislike" : "like" }}</button> </p>   
- 
+           <p><strong> {{ result.likes }}</strong> {{result.likes !== 1 ? "likes" : "like"}}  <button id="display-index" @click="likePost(result.postId)" style="margin:2px;">{{ isLike(result.postId) === 1 ? "dislike" : "like" }}</button> </p>
             <div v-for="(comment, user) in result.comments" v-bind:data-arb="commentFlag" style="margin-left: 10px;">
               	   <strong>{{ user }}:</strong> {{ comment }}
             	 </div>

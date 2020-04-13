@@ -6,9 +6,9 @@ var resultView = new Vue({
     userNameSearch: '',
     userSearchData: [],
 
-    logName: '',
+    logName: '', //USE THIS INSTEAD OF HARDCODED "USER1"
     screenName:'',
-    usernameInput: '',
+    usernameInput: '', 
     passwordInput: '',
     passwordDouble: '',
 
@@ -33,59 +33,16 @@ var resultView = new Vue({
       })
     })
   },
-  /*
-  computed: {
-    isLike: function(pid){
-      return pid;
-      /*
-      if (!this.userSearchData.filter(post=>post.postId===pid)[0].collectiveLikeUsers === undefined) {
-        resultView.userSearchData.find(post=>post.postId===pid)["collectiveLikeUsers"] = {}
-        return 1;
-      }
-      if( "user1" in this.userSearchData.filter(post=>post.postId===pid)[0].collectiveLikeUsers){
-        if(this.userSearchData.filter(post=>post.postId===pid)[0].collectiveLikeUsers["user1"] === 1){
-          return 2;
-        }
-        else{
-          return 1;
-        }
-      }
-      else{
-        return 1;
-      */
-      ////////////////////////////////////////
-      /*
-      let firebaseRefPosts3 = firebase.database().ref("posts");
-      firebaseRefPosts3.orderByChild("postId").equalTo(pid).once('value')
-      
-      .then( (snap) => {
-      // This only works when postID is unique
-      let tempHash = Object.keys(snap.val())[0];
-      let likeUsers = snap.val()[tempHash].collectiveLikeUsers;
-      if(!likeUsers || !("user1" in likeUsers)){
-        return 1;
-      }
-      else if(likeUsers && likeUsers["user1"] === 1){
-        return 2;
-      }
-      else{
-        return 1;
-      }
-      });  */
-    /*   }
-  
-  },
-  */
   methods: {
     isLike: function(pid){
       if (this.userSearchData.filter(post=>post.postId===pid)[0].collectiveLikeUsers === undefined) {
         return 0;
       }
-      else if(!("user1" in this.userSearchData.filter(post=>post.postId===pid)[0].collectiveLikeUsers)){
+      else if(!(this.logName in this.userSearchData.filter(post=>post.postId===pid)[0].collectiveLikeUsers)){
         return 0;
       }
       else {
-        return this.userSearchData.filter(post=>post.postId===pid)[0].collectiveLikeUsers["user1"];
+        return this.userSearchData.filter(post=>post.postId===pid)[0].collectiveLikeUsers[this.logName];
       }
     },  
   likePost: function(pid){
@@ -104,12 +61,14 @@ var resultView = new Vue({
       console.log(this.userSearchData.filter(post=>post.postId===pid))
       //if the username is not in the dictionary containing the users who like or dislike the post
       //then add it into the dictionary
-      if(!likeUsers || !("user1" in likeUsers)){
+      if(!likeUsers || !(this.logName in likeUsers)){
         if (this.userSearchData.filter(post=>post.postId===pid)[0].collectiveLikeUsers === undefined) {
           resultView.userSearchData.find(post=>post.postId===pid)["collectiveLikeUsers"] = {}
         }
-        this.userSearchData.filter(post=>post.postId===pid)[0].collectiveLikeUsers["user1"] = 1
-        likeUsers = Object.assign({"user1": 1}, likeUsers)
+        this.userSearchData.filter(post=>post.postId===pid)[0].collectiveLikeUsers[this.logName] = 1
+        let new_temp_user = {}
+        new_temp_user[this.logName] = 1
+        likeUsers = Object.assign(new_temp_user, likeUsers)
         let firebaseCommentUpdate = firebase.database().ref("posts/" + postHash)
         firebaseCommentUpdate.once('value').then( (snap) => {
           firebaseCommentUpdate.update({ collectiveLikeUsers: likeUsers })
@@ -121,16 +80,16 @@ var resultView = new Vue({
         if (this.userSearchData.filter(post=>post.postId===pid)[0].collectiveLikeUsers === undefined) {
           resultView.userSearchData.find(post=>post.postId===pid)["collectiveLikeUsers"] = {}
         }
-        var firebaseReflike = firebase.database().ref("posts/" + postHash + "/collectiveLikeUsers/user1");
-        if(likeUsers[("user1")] === 0){
+        var firebaseReflike = firebase.database().ref("posts/" + postHash + "/collectiveLikeUsers/" + this.logName);
+        if(likeUsers[(this.logName)] === 0){
           //likeUsers[("user1")] = 1
-          this.userSearchData.filter(post=>post.postId===pid)[0].collectiveLikeUsers["user1"] = 1
+          this.userSearchData.filter(post=>post.postId===pid)[0].collectiveLikeUsers[this.logName] = 1
           firebaseReflike.set(1)
           firebaseRefPostLike.set(numLikes + 1)
           this.userSearchData.filter(post=>post.postId===pid)[0].likes = numLikes + 1;
         }
         else{
-          this.userSearchData.filter(post=>post.postId===pid)[0].collectiveLikeUsers["user1"] = 0
+          this.userSearchData.filter(post=>post.postId===pid)[0].collectiveLikeUsers[this.logName] = 0
           firebaseReflike.set(0)
           firebaseRefPostLike.set(numLikes - 1)
           this.userSearchData.filter(post=>post.postId===pid)[0].likes = numLikes - 1;
