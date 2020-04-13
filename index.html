@@ -136,7 +136,7 @@
                 </div>
    		          <br>
 		            <div>
-		              <input v-bind:id="'query'+result.postId"  type="text" style="margin-left: 10px;">
+		              <input v-bind:id="'query'+result.postId" @keyup.enter="setComment(result.postId)" type="text" style="margin-left: 10px;">
 		              <button id="season-button-index" @click="setComment(result.postId)" style="margin-left:5px;">post</button>
 		            </div>
 	            </div>
