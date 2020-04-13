@@ -33,8 +33,28 @@ var resultView = new Vue({
       })
     })
   },
+  /*
   computed: {
     isLike: function(pid){
+      return pid;
+      /*
+      if (!this.userSearchData.filter(post=>post.postId===pid)[0].collectiveLikeUsers === undefined) {
+        resultView.userSearchData.find(post=>post.postId===pid)["collectiveLikeUsers"] = {}
+        return 1;
+      }
+      if( "user1" in this.userSearchData.filter(post=>post.postId===pid)[0].collectiveLikeUsers){
+        if(this.userSearchData.filter(post=>post.postId===pid)[0].collectiveLikeUsers["user1"] === 1){
+          return 2;
+        }
+        else{
+          return 1;
+        }
+      }
+      else{
+        return 1;
+      */
+      ////////////////////////////////////////
+      /*
       let firebaseRefPosts3 = firebase.database().ref("posts");
       firebaseRefPosts3.orderByChild("postId").equalTo(pid).once('value')
       
@@ -51,10 +71,23 @@ var resultView = new Vue({
       else{
         return 1;
       }
-      });
-    }
+      });  */
+    /*   }
+  
   },
+  */
   methods: {
+    isLike: function(pid){
+      if (this.userSearchData.filter(post=>post.postId===pid)[0].collectiveLikeUsers === undefined) {
+        return 0;
+      }
+      else if(!("user1" in this.userSearchData.filter(post=>post.postId===pid)[0].collectiveLikeUsers)){
+        return 0;
+      }
+      else {
+        return this.userSearchData.filter(post=>post.postId===pid)[0].collectiveLikeUsers["user1"];
+      }
+    },  
   likePost: function(pid){
     console.log("xxx")
     let firebaseRefPosts = firebase.database().ref("posts");
@@ -64,17 +97,6 @@ var resultView = new Vue({
       var postHash = Object.keys(snap.val())[0];
       var numLikes = snap.val()[postHash].likes;
       let likeUsers = snap.val()[postHash].collectiveLikeUsers;
-      /*
-      var postHash = Object.keys(snap.val())[0];
-      let new_comments = snap.val()[postHash].comments;
-      // TODO: change user1 to whoever is logged in
-      let added_comment = 1
-      new_comments = Object.assign({"user1": added_comment}, new_comments)
-      let firebaseCommentUpdate = firebase.database().ref("posts/" + postHash)
-      firebaseCommentUpdate.once('value').then( (snap) => {
-        firebaseCommentUpdate.update({ comments: new_comments })
-      }) 
-      */
 
 			var firebaseRefPostLike = firebase.database().ref("posts/" + postHash + "/likes");
       //firebaseRefPostLike.set(numLikes + 1)
@@ -83,6 +105,10 @@ var resultView = new Vue({
       //if the username is not in the dictionary containing the users who like or dislike the post
       //then add it into the dictionary
       if(!likeUsers || !("user1" in likeUsers)){
+        if (this.userSearchData.filter(post=>post.postId===pid)[0].collectiveLikeUsers === undefined) {
+          resultView.userSearchData.find(post=>post.postId===pid)["collectiveLikeUsers"] = {}
+        }
+        this.userSearchData.filter(post=>post.postId===pid)[0].collectiveLikeUsers["user1"] = 1
         likeUsers = Object.assign({"user1": 1}, likeUsers)
         let firebaseCommentUpdate = firebase.database().ref("posts/" + postHash)
         firebaseCommentUpdate.once('value').then( (snap) => {
@@ -92,14 +118,19 @@ var resultView = new Vue({
         firebaseRefPostLike.set(numLikes + 1)
       }
       else {
+        if (this.userSearchData.filter(post=>post.postId===pid)[0].collectiveLikeUsers === undefined) {
+          resultView.userSearchData.find(post=>post.postId===pid)["collectiveLikeUsers"] = {}
+        }
         var firebaseReflike = firebase.database().ref("posts/" + postHash + "/collectiveLikeUsers/user1");
         if(likeUsers[("user1")] === 0){
           //likeUsers[("user1")] = 1
+          this.userSearchData.filter(post=>post.postId===pid)[0].collectiveLikeUsers["user1"] = 1
           firebaseReflike.set(1)
           firebaseRefPostLike.set(numLikes + 1)
           this.userSearchData.filter(post=>post.postId===pid)[0].likes = numLikes + 1;
         }
         else{
+          this.userSearchData.filter(post=>post.postId===pid)[0].collectiveLikeUsers["user1"] = 0
           firebaseReflike.set(0)
           firebaseRefPostLike.set(numLikes - 1)
           this.userSearchData.filter(post=>post.postId===pid)[0].likes = numLikes - 1;
@@ -342,7 +373,7 @@ var resultView = new Vue({
 				    	'comments': '',
 				    	'postId': currentPostId,
           'owner': 'user1',
-          'collectiveLikeUsers': {}
+          'collectiveLikeUsers': ''
 				    }, function(error) {
               if (error) {
                 console.log(error)
