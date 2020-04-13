@@ -188,12 +188,22 @@ var resultView = new Vue({
       let new_comments = snap.val()[postHash].comments;
       // TODO: change user1 to whoever is logged in
       let added_comment = document.getElementById('query'+pid).value;
-      new_comments = Object.assign({"user1": added_comment}, new_comments)
+      console.log(pid)
+      console.log(+document.getElementById('query'+pid).value)
+      let commentCount = 0
+      
+      if (new_comments !== undefined) {
+        commentCount = Object.keys(new_comments).length
+      }
+      commentCount += 1;
+
+      let commentStr = commentCount.toString()
+      new_comments = Object.assign({[commentStr]: {"userName": resultView.usernameInput, "msg": added_comment}}, new_comments)
+
       let firebaseCommentUpdate = firebase.database().ref("posts/" + postHash)
       firebaseCommentUpdate.once('value').then( (snap) => {
         firebaseCommentUpdate.update({ comments: new_comments })
       })
-      //(this.userSearchData.filter(post=>post.postId===pid)[0].comments);
 
       if (this.userSearchData.filter(post=>post.postId===pid)[0].comments === undefined) {
         resultView.userSearchData.find(post=>post.postId===pid)["comments"] = new_comments
@@ -203,22 +213,6 @@ var resultView = new Vue({
       //console.log(this.userSearchData.filter(post=>post.postId===pid)[0])
       resultView.commentFlag = !resultView.commentFlag
     });
-  },
-  setComment2: function(post_index) {
-    let term = this.userNameSearch + '/photos/' + post_index.toString();
-    let firebaseRefPosts = firebase.database().ref(term);
-    firebaseRefPosts.once('value')
-		.then( (snap) => {
-      // This only works when postID is unique
-      //var postHash = Object.keys(snap.val())[0];
-      //var numLikes = snap.val()[postHash].likes;;
-      let ed = (snap.val()['comments']);
-      ed = Object.assign({"user5": "Hi Jannah"}, ed)
-      //console.log(ed)
-      //let number_likes = snap.val()
-      firebaseRefPosts.update({ comments: ed });
-      this.userSearchData[post_index]['comments'] = ed
-    })
   },
     setUploadImg: function() { 
 	    this.userSearchData = []
