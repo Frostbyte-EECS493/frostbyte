@@ -284,7 +284,7 @@ var resultView = new Vue({
 				    	'likes': 0,
 				    	'comments': '',
 				    	'postId': currentPostId,
-					'owner': 'user1'
+					'owner': resultView.logName
 				    }, function(error) {
               if (error) {
                 console.log(error)
