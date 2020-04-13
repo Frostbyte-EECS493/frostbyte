@@ -83,6 +83,13 @@
   background-color: #0060e8;
 }
 
+.comments-box {
+  max-height: 100px;
+  height: 100px;
+  max-width: 400px;
+  width: 400px;
+}
+
 .but {
   margin-top: 5px;
   background-color: #ADD6FF;

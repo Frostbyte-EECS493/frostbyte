@@ -236,6 +236,8 @@ var resultView = new Vue({
       let new_comments = snap.val()[postHash].comments;
       // TODO: change user1 to whoever is logged in
       let added_comment = document.getElementById('query'+pid).value;
+      // clear comment input box once comment is posted
+      document.getElementById('query'+pid).value = ""
       console.log(pid)
       console.log(+document.getElementById('query'+pid).value)
       let commentCount = 0
