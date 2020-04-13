@@ -120,28 +120,30 @@
       <!-- Display User's Images -->
       <div v-if="loggedIn">
       <div v-for="(result, index) in userSearchData">
-	<div class = "col-lg-6 col-md-6 col-sm-6" style='margin-bottom: 20px; display: inline;'>
+	      <div class = "col-lg-6 col-md-6 col-sm-6" style='margin-bottom: 20px; display: inline;'>
           <div class="col-sm-4" style='max-width:200px;margin-right: 20px;'>
-	      <div class="post">		
-		 <h4>{{ result.owner }}</h4>
-            	 <div class="img-container">
-		   <img style='width: 120%; display: inline; ' v-bind:src="result.imgUrl">
-            	 </div>
-	      	 <br>
-            	 <p><strong> {{ result.likes }}</strong> {{result.likes !== 1 ? "likes" : "like"}}  <button id="display-index" @click="likePost(result.postId)" style="margin:2px;">like</button> </p> 
-            	 <div v-for="(comment, user) in result.comments" v-bind:data-arb="commentFlag" style="margin-left: 10px;">
-              	   <strong>{{ user }}:</strong> {{ comment }}
-            	 </div>
-   		 <br>
-		 <div>
-		   <input v-bind:id="'query'+result.postId"  type="text" style="margin-left: 10px;">
-		   <button id="season-button-index" @click="setComment(result.postId)" style="margin-left:5px;">post</button>
-		 </div>
-	      </div>
-          </div>
-	</div>
+	          <div class="post">
+		          <h4>{{ result.owner }}</h4>
+            	  <div class="img-container">
+		              <img style='width: 120%; display: inline; ' v-bind:src="result.imgUrl">
+            	  </div>
+	      	      <br>
+            	  <p><strong> {{ result.likes }}</strong> {{result.likes !== 1 ? "likes" : "like"}}  <button id="display-index" @click="likePost(result.postId)" style="margin:2px;">{{ isLike(result.postId) === 1 ? "dislike" : "like" }}</button> </p> 
+                <div class="comments-box overflow-auto" style="overflow:auto">
+            	    <div v-if="comment !== undefined" v-for="comment in result.comments" v-bind:data-arb="commentFlag" style="margin-left: 10px;">
+              	    <strong>{{ comment.userName }}:</strong> {{ comment.msg }}
+            	    </div>
+                </div>
+   		          <br>
+		            <div>
+		              <input v-bind:id="'query'+result.postId" @keyup.enter="setComment(result.postId)" type="text" style="margin-left: 10px;">
+		              <button id="season-button-index" @click="setComment(result.postId)" style="margin-left:5px;">post</button>
+		            </div>
+	            </div>
+            </div>
+	        </div>
+        </div>
       </div>
-    </div>
     
     </div>
 	  <!-- The core Firebase JS SDK is always required and must be listed first -->
