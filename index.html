@@ -92,30 +92,6 @@
 
       <br>
 
-      <!-- Upload Image 
-      <form style='margin-left: 40px;'>
-        <input id="setUploadImg" class="file" type="file" value="">
-        <button class = "but" id="submitImg" type="submit" v-on:click="setUploadImg">Upload</button>
-      </form>-->
-      
-      
-      <!-- Display images like IG 
-      <div>
-      <div v-for="(result, index) in resultData">
-        <div class = "col-lg-6 col-md-6 col-sm-6" style='margin-bottom: 20px; display: inline; height: 250px' >
-          <div class="col-sm-4" style='max-width:200px;margin-right: 30px'>
-            <img style='width: 120%; display: inline; ' v-bind:src="result.imgUrl">
-              
-            <p><strong> {{ result.likes }}</strong> {{result.likes !== 1 ? "likes" : "like"}}</p> <button id="season-button1" class = "btn btn-success" @click="setComment(index)" style="margin:2px;">like</button>
-             {{result.comments}}
-             <div v-for="(comment, index2) in result.comments">
-              <strong>user1:</strong> {{ comment }} 
-            </div>
-             <button id="season-button1" class = "btn btn-success" @click="setComment(index2)" style="margin:2px;">post</button> 
-
-          </div>
-        </div>
-      </div>-->
       <br>
       <!-- Display User's Images -->
       <div v-if="loggedIn">
