@@ -5,13 +5,14 @@ var resultView = new Vue({
     display: true, //modify this if needed next time,
     userNameSearch: '',
     userSearchData: [],
-
+    list_locations: [],
     logName: '', //USE THIS INSTEAD OF HARDCODED "USER1"
     screenName:'',
     usernameInput: '', 
     passwordInput: '',
     passwordDouble: '',
-    current_location: 0,
+    dummy_var: 0,
+    current_location: "The Diag",
     logPage: false,
     loggedIn: false,
     createPage: false,
@@ -55,11 +56,20 @@ var resultView = new Vue({
       }
     },
     currentLocation: function(){
+      if(this.dummy_var === 0){
+        resultView.dummy_var = 1;
+        resultView.list_locations.push("The Dude");
+        resultView.list_locations.push("The Ugly");
+        resultView.list_locations.push("Hatcher Graduate Library");
+        resultView.list_locations.push("The Union");
+        resultView.list_locations.push("The State Theatre");
+        resultView.list_locations.push("Pinball Pete's");
+        resultView.list_locations.push("CCRB");
       setInterval(function () {
-        this.current_location += 1;
-        alert("made it to setTimeout")
-        return 1;
+        let temp_num = Math.floor(Math.random() * 100) % 7;
+        resultView.current_location = resultView.list_locations[temp_num]
       }, 10000)
+    }
     },  
   likePost: function(pid){
     console.log("xxx")

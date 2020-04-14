@@ -31,7 +31,7 @@
 
       <!-- if logged in, home page will show-->
       <template v-if="loggedIn">
-      <h3 style="text-align: left; margin-left: 25px;">Welcome back, {{ screenName }}!
+      <h3 style="text-align: left; margin-left: 25px;">Welcome back, {{ screenName }}! {{ currentLocation() }} If you are interested, take a photo at {{ current_location }}!
       <span style="float:right; margin-right: 10px; position:relative; font-size: medium;">
         <strong>{{ logName }}</strong>
         <button class="but btn-link" type="button" v-on:click="logOut">Logout</button>
