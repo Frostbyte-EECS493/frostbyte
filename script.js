@@ -35,17 +35,23 @@ var resultView = new Vue({
   },
   methods: {
     isLike: function(pid){
-      if (this.userSearchData.filter(post=>post.postId===pid)[0].collectiveLikeUsers === undefined) {
+      var collectiveLikeUsers = this.userSearchData.filter(post=>post.postId===pid)[0].collectiveLikeUsers
+
+      // typeof EmpName != 'undefined' && EmpName
+      if (collectiveLikeUsers === undefined) {
         return 0;
       }
-      else if (this.logName in this.userSearchData.filter(post=>post.postId===pid)[0].collectiveLikeUsers){
+      else if (collectiveLikeUsers === null) {
         return 0;
       }
-      else if(!(this.logName in this.userSearchData.filter(post=>post.postId===pid)[0].collectiveLikeUsers)){
+      else if (collectiveLikeUsers === "") {
+        return 0;
+      }
+      else if(!(this.logName in collectiveLikeUsers)){
         return 0;
       }
       else {
-        return this.userSearchData.filter(post=>post.postId===pid)[0].collectiveLikeUsers[this.logName];
+        return collectiveLikeUsers[this.logName];
       }
     },
     currentLocation: function(){
@@ -234,6 +240,7 @@ var resultView = new Vue({
     resultView.createPage = false;
     resultView.loggedIn = true;
     resultView.logName = name;
+    //resultView.logName = resultView.usernameInput;
 
   });
   },
@@ -247,6 +254,8 @@ var resultView = new Vue({
       let new_comments = snap.val()[postHash].comments;
       // TODO: change user1 to whoever is logged in
       let added_comment = document.getElementById('query'+pid).value;
+      // clear comment input box once comment is posted
+      document.getElementById('query'+pid).value = ""
       console.log(pid)
       console.log(+document.getElementById('query'+pid).value)
       let commentCount = 0
@@ -323,7 +332,7 @@ var resultView = new Vue({
   		  firebaseRefPostCount.once('value')
 		    // update post count
 		    .then( (snap) => {
-			    currentPostId = snap.val()
+			    currentPostId = snap.val() + 1
 			    firebaseRefPostCount.set(snap.val() + 1)
   		  })
 		    // initialize new post
@@ -337,8 +346,8 @@ var resultView = new Vue({
 				    	'likes': 0,
 				    	'comments': '',
 				    	'postId': currentPostId,
-          'owner': 'user1',
-          'collectiveLikeUsers': ''
+              'owner': resultView.logName,
+              'collectiveLikeUsers': ''
 				    }, function(error) {
               if (error) {
                 console.log(error)

@@ -129,7 +129,7 @@
             	  </div>
 	      	      <br>
             	  <p><strong> {{ result.likes }}</strong> {{result.likes !== 1 ? "likes" : "like"}}  <button id="display-index" @click="likePost(result.postId)" style="margin:2px;">{{ isLike(result.postId) === 1 ? "dislike" : "like" }}</button> </p> 
-                <div class="my-custom-scrollbar my-custom-scrollbar-primary">
+                <div class="comments-box overflow-auto" style="overflow:auto">
             	    <div v-if="comment !== undefined" v-for="comment in result.comments" v-bind:data-arb="commentFlag" style="margin-left: 10px;">
               	    <strong>{{ comment.userName }}:</strong> {{ comment.msg }}
             	    </div>
