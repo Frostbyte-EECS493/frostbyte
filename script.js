@@ -11,7 +11,7 @@ var resultView = new Vue({
     usernameInput: '', 
     passwordInput: '',
     passwordDouble: '',
-
+    current_location: 0,
     logPage: false,
     loggedIn: false,
     createPage: false,
@@ -38,12 +38,22 @@ var resultView = new Vue({
       if (this.userSearchData.filter(post=>post.postId===pid)[0].collectiveLikeUsers === undefined) {
         return 0;
       }
+      else if (this.logName in this.userSearchData.filter(post=>post.postId===pid)[0].collectiveLikeUsers){
+        return 0;
+      }
       else if(!(this.logName in this.userSearchData.filter(post=>post.postId===pid)[0].collectiveLikeUsers)){
         return 0;
       }
       else {
         return this.userSearchData.filter(post=>post.postId===pid)[0].collectiveLikeUsers[this.logName];
       }
+    },
+    currentLocation: function(){
+      setInterval(function () {
+        this.current_location += 1;
+        alert("made it to setTimeout")
+        return 1;
+      }, 10000)
     },  
   likePost: function(pid){
     console.log("xxx")
@@ -223,6 +233,7 @@ var resultView = new Vue({
     alert("Welcome to FrostByte, " + resultView.screenName + "!");
     resultView.createPage = false;
     resultView.loggedIn = true;
+    resultView.logName = name;
 
   });
   },
