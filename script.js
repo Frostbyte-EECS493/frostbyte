@@ -35,14 +35,23 @@ var resultView = new Vue({
   },
   methods: {
     isLike: function(pid){
-      if (this.userSearchData.filter(post=>post.postId===pid)[0].collectiveLikeUsers === undefined) {
+      var collectiveLikeUsers = this.userSearchData.filter(post=>post.postId===pid)[0].collectiveLikeUsers
+
+      // typeof EmpName != 'undefined' && EmpName
+      if (collectiveLikeUsers === undefined) {
         return 0;
       }
-      else if(!(this.logName in this.userSearchData.filter(post=>post.postId===pid)[0].collectiveLikeUsers)){
+      else if (collectiveLikeUsers === null) {
+        return 0;
+      }
+      else if (collectiveLikeUsers === "") {
+        return 0;
+      }
+      else if(!(this.logName in collectiveLikeUsers)){
         return 0;
       }
       else {
-        return this.userSearchData.filter(post=>post.postId===pid)[0].collectiveLikeUsers[this.logName];
+        return collectiveLikeUsers[this.logName];
       }
     },  
   likePost: function(pid){
