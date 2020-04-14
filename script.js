@@ -223,6 +223,7 @@ var resultView = new Vue({
     alert("Welcome to FrostByte, " + resultView.screenName + "!");
     resultView.createPage = false;
     resultView.loggedIn = true;
+    resultView.logName = resultView.usernameInput;
 
   });
   },
@@ -314,7 +315,7 @@ var resultView = new Vue({
   		  firebaseRefPostCount.once('value')
 		    // update post count
 		    .then( (snap) => {
-			    currentPostId = snap.val()
+			    currentPostId = snap.val() + 1
 			    firebaseRefPostCount.set(snap.val() + 1)
   		  })
 		    // initialize new post
