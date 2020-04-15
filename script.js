@@ -136,6 +136,7 @@ var resultView = new Vue({
     this.usernameInput = '';
     this.passwordInput = '';
     this.passwordDouble = '';
+    this.userNameSearch = '';
   },
   // takes user to login page (but not logged in yet)
   logIn: function(){
@@ -147,6 +148,7 @@ var resultView = new Vue({
     this.logPage = false
     this.createPage = false
     if (this.loggedIn) {
+      this.userNameSearch = '';
       var firebaseRef = firebase.storage().ref();
       let firebaseRefPosts = firebase.database().ref("posts");
       this.userSearchData = []
