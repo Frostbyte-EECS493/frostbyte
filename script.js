@@ -252,6 +252,16 @@ var resultView = new Vue({
     resultView.logName = name;
     //resultView.logName = resultView.usernameInput;
 
+    let firebaseRefPosts = firebase.database().ref("posts");
+    firebaseRefPosts.once('value')
+    .then((snapshot) => {
+      snapshot.forEach( (childSnapshot) => {
+        console.log("loading...")
+        console.log(childSnapshot.val())
+        resultView.userSearchData.push(childSnapshot.val())
+      })
+    })
+
   });
   },
 
