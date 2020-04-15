@@ -59,7 +59,7 @@ var resultView = new Vue({
       if(this.dummy_var === 0){
         resultView.dummy_var = 1;
         resultView.list_locations.push("The Dude");
-        resultView.list_locations.push("The Ugly");
+        resultView.list_locations.push("The Ugli");
         resultView.list_locations.push("Hatcher Graduate Library");
         resultView.list_locations.push("The Union");
         resultView.list_locations.push("The State Theatre");
