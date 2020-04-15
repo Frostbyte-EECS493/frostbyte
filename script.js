@@ -307,7 +307,7 @@ var resultView = new Vue({
     setUploadImg: function() { 
 	    this.userSearchData = []
   	  console.log("choosing");
-      var pic = document.getElementById("setUploadImg"); 
+      var pic = document.getElementById("setUploadImg");
   
       // selected file is that file which user chosen by html form 
       selectedFile = pic.files[0];
@@ -394,6 +394,7 @@ var resultView = new Vue({
 		      })
         })
       })
+      document.getElementById("setUploadImg").value = "";
     }
   }, //end of methods
 })
