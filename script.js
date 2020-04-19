@@ -2,11 +2,11 @@ var selectedFile;
 var resultView = new Vue({
   el: '#app',
   data: {
-    display: true, //modify this if needed next time,
+    display: true,
     userNameSearch: '',
     userSearchData: [],
     list_locations: [],
-    logName: '', //USE THIS INSTEAD OF HARDCODED "USER1"
+    logName: '',
     screenName:'',
     usernameInput: '', 
     passwordInput: '',
@@ -22,14 +22,9 @@ var resultView = new Vue({
   mounted: function() {
     var firebaseRef = firebase.storage().ref();
     let firebaseRefPosts = firebase.database().ref("posts");
-    //console.log("loading images from database")
     firebaseRefPosts.once('value')
     .then((snapshot) => {
       snapshot.forEach( (childSnapshot) => {
-        //let childKey = childSnapshot.key
-        //let childData = childSnapshot.val()
-        //console.log("loading...")
-        //console.log(childSnapshot.val())
         resultView.userSearchData.push(childSnapshot.val())
       })
     })
@@ -82,7 +77,6 @@ var resultView = new Vue({
       let likeUsers = snap.val()[postHash].collectiveLikeUsers;
 
 			var firebaseRefPostLike = firebase.database().ref("posts/" + postHash + "/likes");
-      //firebaseRefPostLike.set(numLikes + 1)
       console.log(pid)
       console.log(this.userSearchData.filter(post=>post.postId===pid))
       //if the username is not in the dictionary containing the users who like or dislike the post
@@ -108,7 +102,6 @@ var resultView = new Vue({
         }
         var firebaseReflike = firebase.database().ref("posts/" + postHash + "/collectiveLikeUsers/" + this.logName);
         if(likeUsers[(this.logName)] === 0){
-          //likeUsers[("user1")] = 1
           this.userSearchData.filter(post=>post.postId===pid)[0].collectiveLikeUsers[this.logName] = 1
           firebaseReflike.set(1)
           firebaseRefPostLike.set(numLikes + 1)
@@ -121,8 +114,7 @@ var resultView = new Vue({
           this.userSearchData.filter(post=>post.postId===pid)[0].likes = numLikes - 1;
         }
       }
-      //this.userSearchData.filter(post=>post.postId===pid)[0].likes = numLikes + 1;
-  		});
+  	});
   },
   // log out of account
   logOut: function(){
@@ -161,7 +153,6 @@ var resultView = new Vue({
   },
   // checks username/password to log user in
   checkCredentials: function(){
-
     let user = this.usernameInput;
     let pass = this.passwordInput;
     let userDatabase = '';
@@ -235,7 +226,7 @@ var resultView = new Vue({
       return;
     }
     // add account to firebase database
-    //increment userCount in database
+    // increment userCount in database
     let numUsers = 1;
     firebase.database().ref("userCount").once('value').then(function(snapshot) {
       numUsers += snapshot.val();
@@ -252,7 +243,6 @@ var resultView = new Vue({
     resultView.createPage = false;
     resultView.loggedIn = true;
     resultView.logName = name;
-    //resultView.logName = resultView.usernameInput;
 
     let firebaseRefPosts = firebase.database().ref("posts");
     firebaseRefPosts.once('value')
@@ -263,7 +253,6 @@ var resultView = new Vue({
         resultView.userSearchData.push(childSnapshot.val())
       })
     })
-
   });
   },
 
@@ -271,12 +260,10 @@ var resultView = new Vue({
     let firebaseRefPosts = firebase.database().ref("posts");
     firebaseRefPosts.orderByChild("postId").equalTo(pid).once('value')
 		.then( (snap) => {
-      // This only works when postID is unique
       var postHash = Object.keys(snap.val())[0];
       let new_comments = snap.val()[postHash].comments;
-      // TODO: change user1 to whoever is logged in
       let added_comment = document.getElementById('query'+pid).value;
-      // clear comment input box once comment is posted
+
       document.getElementById('query'+pid).value = ""
       console.log(pid)
       console.log(+document.getElementById('query'+pid).value)
@@ -300,7 +287,6 @@ var resultView = new Vue({
       } else {
         this.userSearchData.filter(post=>post.postId===pid)[0].comments = new_comments
       }
-      //console.log(this.userSearchData.filter(post=>post.postId===pid)[0])
       resultView.commentFlag = !resultView.commentFlag
     });
   },
@@ -313,8 +299,6 @@ var resultView = new Vue({
       selectedFile = pic.files[0];
       console.log("File")
       console.log(selectedFile)
-  
-        // Make save button disabled for few seconds that has id='submitImg'
         // Avoid spam saving
         document.getElementById('submitImg').setAttribute('disabled', 'true'); 
         // Save to firebase storage
@@ -327,8 +311,6 @@ var resultView = new Vue({
         let returnArr = [];
         snapshot.forEach(function(childSnapshot) {
           returnArr.push(childSnapshot.val())
-          //this.userSearchData.push(childSnapshot.val())
-          // this.userSearchData.push(childSnapshot.val());
         });
         if(!returnArr.length) {
           alert("There are no photos to show for this user.");
@@ -346,9 +328,7 @@ var resultView = new Vue({
      	console.log("Uploading at " + name);
      	let storageRef = firebase.storage().ref('/images/'+ name);
      	let uploadTask = storageRef.put(selectedFile);
-
-    
-        // add new post info to firebase database
+      // add new post info to firebase database
       uploadTask.then( () => {
 		    let currentPostId = 0
   		  firebaseRefPostCount.once('value')
@@ -379,8 +359,6 @@ var resultView = new Vue({
                 firebaseRefPosts.once('value')
                 .then((snapshot) => {
                   snapshot.forEach( (childSnapshot) => {
-                    //let childKey = childSnapshot.key
-                    //let childData = childSnapshot.val()
                     console.log("loading...")
                     console.log(childSnapshot.val())
                     resultView.userSearchData.push(childSnapshot.val())
@@ -396,7 +374,7 @@ var resultView = new Vue({
       })
       document.getElementById("setUploadImg").value = "";
     }
-  }, //end of methods
+  },
 })
 
 !function(d,s,id){
