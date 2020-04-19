@@ -20,7 +20,6 @@ var resultView = new Vue({
     commentFlag: false,
   },
   mounted: function() {
-    var firebaseRef = firebase.storage().ref();
     let firebaseRefPosts = firebase.database().ref("posts");
     firebaseRefPosts.once('value')
     .then((snapshot) => {
@@ -79,8 +78,8 @@ var resultView = new Vue({
 			var firebaseRefPostLike = firebase.database().ref("posts/" + postHash + "/likes");
       console.log(pid)
       console.log(this.userSearchData.filter(post=>post.postId===pid))
-      //if the username is not in the dictionary containing the users who like or dislike the post
-      //then add it into the dictionary
+      // if the username is not in the dictionary containing the users who like or dislike the post
+      // then add it into the dictionary
       if(!likeUsers || !(this.logName in likeUsers)){
         if (this.userSearchData.filter(post=>post.postId===pid)[0].collectiveLikeUsers === undefined) {
           resultView.userSearchData.find(post=>post.postId===pid)["collectiveLikeUsers"] = {}
